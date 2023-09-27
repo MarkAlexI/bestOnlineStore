@@ -2,10 +2,6 @@
 @import "colors";
 
 .header {
-  &__box {
-    width: 1920px;
-  }
-
   &__logo {
     @include logo-mixin.logo;
   }

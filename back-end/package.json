@@ -5,9 +5,9 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js --mode develop",
-    "start:prod": "node src/server.js --mode production",
-    "build": "tsc"
+    "start": "node init && node src/server.js --mode develop",
+    "start:prod": "node init && node src/server.js --mode production",
+    "build": "node init && tsc"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

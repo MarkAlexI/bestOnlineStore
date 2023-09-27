@@ -13,6 +13,13 @@ import { mainCategories } from '@interfaces/catalog.data';
 })
 export class MenuComponent {
   categories: Category[] = mainCategories;
+  currentCategory!: string;
+
+  showImg(src: string) {
+    if (src !== this.currentCategory) {
+      this.currentCategory = src;
+    }
+  }
 
   showSubcategories(category: Category) {
     category.showSubcategories = true;

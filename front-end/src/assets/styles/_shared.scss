@@ -10,7 +10,7 @@
 }
 
 body {
-  @include font-roboto;
+  @include font-montserrat;
 }
 
 .wrapper {
@@ -30,4 +30,8 @@ a {
   text-align: center;
   color: $light-gray;
   font-size: 20px;
+}
+
+ul {
+  list-style: none;
 }

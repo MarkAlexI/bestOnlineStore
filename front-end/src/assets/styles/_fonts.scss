@@ -7,6 +7,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Manrope&family=Roboto:ital,wght@0,400;0,500;1,300&family=Satisfy&family=Titan+One&display=swap");
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
 @mixin satisfy {
   font-family: "Satisfy", cursive;
 }
@@ -15,6 +17,10 @@
 }
 @mixin font-roboto {
   font-family: "Roboto", sans-serif;
+}
+
+@mixin font-montserrat {
+  font-family: 'Montserrat', sans-serif;
 }
 
 @mixin primary-roboto($size, $weight, $style, $height) {

@@ -1,7 +1,6 @@
-<!--
-<section class="products" *ngIf="subcategory">
-  <p *ngIf="categoryName" class="products__path path">{{ categoryName }}</p>
-  <h2 class="products__title">{{ subcategory.name }}</h2>
+<section class="products">
+<!--  <p *ngIf="categoryName" class="products__path path">{{ categoryName }}</p>-->
+<!--  <h2 class="products__title">{{ subcategory.name }}</h2>-->
   <span class="products__cards-filter" (click)="isClickFilter = !isClickFilter"
     >Фільтри</span
   >
@@ -15,12 +14,12 @@
     </ul>
   </div>
   <div class="products__cards">
-    <div *ngFor="let product of subcategory.products">
-      <app-product-card
-        [product]="product"
-        [routerLink]="['/catalog', product.id]"
-      ></app-product-card>
-    </div>
+<!--    <div *ngFor="let product of products">-->
+<!--      <app-product-card-->
+<!--        [product]="product"-->
+<!--        [routerLink]="['/catalog', product.id]"-->
+<!--      ></app-product-card>-->
+<!--    </div>-->
   </div>
 </section>
 <app-filters
@@ -28,4 +27,3 @@
   [isClickFilter]="isClickFilter"
   (isClickFilterChange)="onIsClickFilterChange($event)"
 ></app-filters>
--->

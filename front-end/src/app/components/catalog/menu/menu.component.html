@@ -1,14 +1,13 @@
 <section class="categories">
   <div class="categories__container">
     <ul class="categories__menu-side">
-      <!-- directive @HostListenter  -->
       <li
         *ngFor="let category of categories"
         (mouseenter)="showSubcategories(category)"
         (mouseleave)="hideSubcategories()"
       >
         <a
-          class="categories__menu-title"
+          class="categories__menu-title" (mouseenter)="showImg(category.srcImg)"
           [routerLink]="category.subcategories ? null : category.routerLink"
           >{{ category.name }}</a
         >
@@ -16,13 +15,15 @@
           <li *ngFor="let subcategory of category.subcategories">
             <a
               class="categories__menu-subtitle"
+              (mouseenter)="showImg(subcategory.srcImg)"
               [routerLink]="subcategory.routerLink"
-              >{{ subcategory.name }}</a
-            >
+              >
+              {{ subcategory.name }}
+            </a>
           </li>
         </ul>
       </li>
     </ul>
   </div>
-  <div class="categories__image"></div>
+  <div class="categories__image" [ngStyle]="{ 'background-image': 'url(' + (currentCategory || categories[0].srcImg) + ')' }"></div>
 </section>
