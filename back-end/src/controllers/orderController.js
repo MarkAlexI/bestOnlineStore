@@ -9,34 +9,17 @@ import {
 } from '../utils/constants.js';
 import sendRes from '../utils/handleResponse.js';
 import CartService from '../services/cartService.js';
+import OrderService from '../services/orderService.js';
 
 const getAllOrders = async (req, res) => {
   const { status } = req.query;
-
-  try {
-    const orders = await Order.find(status ? { status } : {}).populate('user', 'name');
-
-    if (!orders || orders.length === 0) {
-      return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, MESSAGES.ORDER_NOT_FOUND);
-    }
-
-    return sendRes(res, HTTP_STATUS_CODES.OK, 'All orders in payload.', orders);
-  } catch (error) {
-    return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, 'Error while fetching all orders.', error);
-  }
+  const result = await OrderService.getAllOrders(status);
+  return sendRes(res, result.status, result.message, result.data);
 };
 
 const getOrderHistory = async (req, res) => {
-  try {
-    const userId = req.user._id;
-
-    const orders = await Order.find({ user: userId })
-      .populate('cart');
-
-    return sendRes(res, HTTP_STATUS_CODES.OK, 'Your order(s) in payload.', orders);
-  } catch (error) {
-    return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, 'Error while getting order history.', error);
-  }
+  const result = await OrderService.getOrderHistory(req.user._id);
+  return sendRes(res, result.status, result.message, result.data);
 };
 
 const getOrderById = async (req, res) => {
