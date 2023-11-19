@@ -1,6 +1,5 @@
 import Order from '../models/orderSchema.js';
 import Cart from '../models/cartSchema.js';
-import ShippingAddress from '../models/shippingAddressSchema.js';
 import Product from '../models/productSchema.js';
 import sendEmail from '../utils/email.js';
 import {
@@ -23,73 +22,14 @@ const getOrderHistory = async (req, res) => {
 };
 
 const getOrderById = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.id)
-      .populate('cart')
-      .populate('shippingAddress');
-
-    if (order) {
-      const { image } = order.cart?.items[0] || '';
-      return sendRes(res, HTTP_STATUS_CODES.OK, 'Order found.', { order, image });
-    } else {
-      return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, MESSAGES.ORDER_NOT_FOUND);
-    }
-  } catch (error) {
-    return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, 'Error while fetching order by ID.', error);
-  }
+  const result = await OrderService.getOrderById(req.params.id);
+  return sendRes(res, result.status, result.message, result.data);
 };
 
 const createOrder = async (req, res) => {
-  try {
-    const userId = req.user._id;
-
-    const cart = await CartService.findLatestCart(userId);
-
-    if (!cart) {
-      return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, 'Consumer cart is empty.');
-    }
-
-    let existAddress = await ShippingAddress.findOne({ user: userId });
-
-    if (!existAddress) {
-      existAddress = new ShippingAddress({
-        user: userId,
-        address: req.body.address,
-        city: req.body.city,
-        country: req.body.country,
-        postalCode: req.body.postalCode,
-        deliveryMethod: req.body.deliveryMethod,
-        novaPoshtaAddress: req.body.novaPoshtaAddress,
-      });
-    } else {
-      const { address, city, country, postalCode, deliveryMethod, novaPoshtaAddress } = req.body;
-
-      existAddress.address = address || existAddress.address;
-      existAddress.city = city || existAddress.city;
-      existAddress.country = country || existAddress.country;
-      existAddress.postalCode = postalCode || existAddress.postalCode;
-      existAddress.deliveryMethod = deliveryMethod || existAddress.deliveryMethod;
-      existAddress.novaPoshtaAddress = novaPoshtaAddress || existAddress.novaPoshtaAddress;
-    }
-
-    const newAddress = await existAddress.save();
-
-    const order = new Order({
-      cart: cart._id,
-      shippingAddress: newAddress,
-      paymentMethod: req.body.paymentMethod,
-      itemsPrice: cart.totalPrice,
-      user: userId,
-    });
-
-    const savedOrder = await order.save();
-
-    const createdOrder = await Order.findById(savedOrder._id).populate('cart');
-
-    return sendRes(res, HTTP_STATUS_CODES.CREATED, 'Order created successfully.', createdOrder);
-  } catch (error) {
-    return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, MESSAGES.DATABASE_ERROR, error);
-  }
+  const userId = req.user._id;
+  const result = await OrderService.createOrder(userId, req.body);
+  return sendRes(res, result.status, result.message, result.data);
 };
 
 const makePaymentOrder = async (req, res) => {
