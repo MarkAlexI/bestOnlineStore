@@ -31,8 +31,12 @@ class CartService {
       };
       cart.items.push(cartItem);
     } else {
-      const cartItem = cart.items[cartItemIndex];
-      cartItem.quantity = quantity;
+      if (quantity === 0) {
+        cart.items = cart.items.filter(item => item.product.toString() !== productId);
+      } else {
+        const cartItem = cart.items[cartItemIndex];
+        cartItem.quantity = quantity;
+      }
     }
 
     cart.totalPrice = cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
