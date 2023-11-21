@@ -10,7 +10,7 @@ import {
 
 class AuthService {
   static async signInUser(email, password) {
-    try {
+    try {console.log(email);
       const user = await User.findOne({ email });
 
       if (user && bcrypt.compareSync(password, user.password)) {

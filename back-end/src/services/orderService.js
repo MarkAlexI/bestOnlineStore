@@ -1,6 +1,9 @@
 import Order from '../models/orderSchema.js';
 import CartService from './cartService.js';
+import Product from '../models/productSchema.js';
+import Cart from '../models/cartSchema.js';
 import ShippingAddress from '../models/shippingAddressSchema.js';
+import sendEmail from '../utils/email.js';
 import {
   HTTP_STATUS_CODES,
   MESSAGES
@@ -132,6 +135,129 @@ class OrderService {
       return {
         status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
         message: MESSAGES.DATABASE_ERROR,
+        data: error,
+      };
+    }
+  }
+
+  static async makePaymentOrder(orderId, paymentData, userEmail) {
+    try {
+      const order = await Order.findById(orderId);
+      if (order) {
+        const { id } = paymentData;
+
+        order.isPaid = true;
+        order.paidAt = Date.now();
+        order.paymentResult = {
+          id,
+          status: 'success',
+          update_time: Date.now(),
+          email_address: userEmail,
+        };
+
+        const updatedOrder = await order.save();
+
+        sendEmail(userEmail, 'Changes on your order', `Order ${orderId} was paid.`);
+
+        return {
+          status: HTTP_STATUS_CODES.OK,
+          message: 'Order has been paid.',
+          data: updatedOrder,
+        };
+      } else {
+        return {
+          status: HTTP_STATUS_CODES.NOT_FOUND,
+          message: MESSAGES.ORDER_NOT_FOUND,
+          data: null,
+        };
+      }
+    } catch (error) {
+      return {
+        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        message: MESSAGES.INTERNAL_SERVER_ERROR,
+        data: error,
+      };
+    }
+  }
+
+  static async changeOrder(userId, orderId, updateFields, userEmail) {
+    try {
+      const order = await Order.findById(orderId);
+
+      if (!order) {
+        return {
+          status: HTTP_STATUS_CODES.NOT_FOUND,
+          message: MESSAGES.ORDER_NOT_FOUND,
+          data: null,
+        };
+      }
+
+      let updatedOrder = null;
+
+      if (updateFields.status === 'Відправлено' && order.status === 'Комплектується') {
+        const cart = await CartService.findLatestCart(userId);
+
+        for (const cartItem of cart.items) {
+          const product = await Product.findById(cartItem.product);
+
+          if (product) {
+            const quantityToReduce = cartItem.quantity;
+            if (product.instock && quantityToReduce <= product.countInStock) {
+              product.countInStock -= quantityToReduce;
+              await product.save();
+            }
+          }
+        }
+
+        const newCart = new Cart({ user: userId, items: [] });
+        await newCart.save();
+
+        order.status = 'Відправлено';
+        updatedOrder = await order.save();
+      } else {
+        updatedOrder = await Order.findByIdAndUpdate(
+          orderId,
+          updateFields,
+          { new: true }
+        );
+      }
+
+      sendEmail(userEmail, 'Changes on your order', `Order ${orderId} was updated.`);
+
+      return {
+        status: HTTP_STATUS_CODES.OK,
+        message: 'Order updated.',
+        data: updatedOrder,
+      };
+    } catch (error) {
+      return {
+        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        message: MESSAGES.INTERNAL_SERVER_ERROR,
+        data: error,
+      };
+    }
+  }
+
+  static async deleteOrder(orderId) {
+    try {
+      const deletedOrder = await Order.findByIdAndRemove(orderId);
+      if (deletedOrder) {
+        return {
+          status: HTTP_STATUS_CODES.OK,
+          message: 'Order deleted.',
+          data: deletedOrder,
+        };
+      } else {
+        return {
+          status: HTTP_STATUS_CODES.NOT_FOUND,
+          message: MESSAGES.ORDER_NOT_FOUND,
+          data: null,
+        };
+      }
+    } catch (error) {
+      return {
+        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        message: 'Error while deleting order.',
         data: error,
       };
     }
