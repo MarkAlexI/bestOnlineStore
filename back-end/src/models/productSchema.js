@@ -27,6 +27,7 @@ const productSchema = new mongoose.Schema({
   raiting: { type: Number, default: 3 },
   characteristics: [characteristicsSchema],
   numReviews: { type: Number, default: 0 },
+  viewed: { type: Number, default: 0 },
   reviews: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Review'

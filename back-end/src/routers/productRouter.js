@@ -18,6 +18,7 @@ productRouter.get('/search', validateProductSearch, searchProducts);
 productRouter.get('/:id', getProductById);
 productRouter.post('/', isAuth, isAdmin, createProduct);
 productRouter.put('/:id', isAuth, isAdmin, updateProduct);
+productRouter.patch('/:id', updateProduct);
 productRouter.delete('/:id', isAuth, isAdmin, deleteProduct);
 
 export default productRouter;
