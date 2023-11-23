@@ -5,7 +5,7 @@ import {
   MESSAGES
 } from '../utils/constants.js';
 import ProductService from '../services/productService.js';
-
+import logger from '../utils/logger.js';
 const getAllProducts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
@@ -41,6 +41,13 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const productId = req.params.id;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {logger.error(errors.array());
+    return sendRes(res, HTTP_STATUS_CODES.BAD_REQUEST, MESSAGES.VALIDATION_ERROR, errors.array());
+  }
+
   const result = await ProductService.updateProduct(productId, req.body);
   return sendRes(res, result.status, result.message, result.data);
 };

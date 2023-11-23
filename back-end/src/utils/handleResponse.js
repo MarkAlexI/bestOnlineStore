@@ -18,9 +18,7 @@ const sendRes = (res, status, text, payload = null) => {
     Payload: ${payload}
   `);
 
-  const answer = logLevel === 'info'
-    ? payload
-    : `${payload}`;
+  const answer = payload;
 
   res.status(status).json({
     message,
