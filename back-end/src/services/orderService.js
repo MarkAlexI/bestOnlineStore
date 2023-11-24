@@ -89,7 +89,15 @@ class OrderService {
       if (!cart) {
         return {
           status: HTTP_STATUS_CODES.NOT_FOUND,
-          message: 'Consumer cart is empty.',
+          message: MESSAGES.CART_NOT_FOUND,
+          data: null,
+        };
+      }
+
+      if (cart.items.length === 0) {
+        return {
+          status: HTTP_STATUS_CODES.NOT_FOUND,
+          message: MESSAGES.CART_IS_EMPTY,
           data: null,
         };
       }

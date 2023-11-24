@@ -20,6 +20,8 @@ const MESSAGES = {
   EMPTY_QUERY_ERROR: 'Your query have a nullable length.',
   ORDER_NOT_FOUND: 'Order was not found.',
   PRODUCT_NOT_FOUND: 'Product not found.',
+  CART_NOT_FOUND: 'Consumer cart not found.',
+  CART_IS_EMPTY: 'Consumer cart is empty.',
   VALIDATION_ERROR: 'Some errors was occured when validate.',
   DATABASE_ERROR: 'Some error occurred on DB.',
   DATA_RETRIEVED: 'Запитані дані успішно отримано.',
