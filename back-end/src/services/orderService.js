@@ -151,6 +151,15 @@ class OrderService {
   static async makePaymentOrder(orderId, paymentData, userEmail) {
     try {
       const order = await Order.findById(orderId);
+
+      if (order.isPaid === true) {
+        return {
+          status: HTTP_STATUS_CODES.BAD_REQUEST,
+          message: MESSAGES.ORDER_IS_PAID,
+          data: null,
+        };
+      }
+
       if (order) {
         const { id } = paymentData;
 

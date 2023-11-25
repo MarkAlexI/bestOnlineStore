@@ -34,6 +34,7 @@ const MESSAGES = {
   USER_WAS_UPDATED: 'User was updated.',
   USER_CART_IN_PAYLOAD: 'User cart in payload.',
   CONSUMER_CART_EMPTY: 'Consumer cart is empty.',
+  ORDER_IS_PAID: 'Order is already paid',
   CART_CLEARED_SUCCESSFULLY: 'Cart is successfully cleared.',
   INSUFFICIENT_STOCK: 'Insufficient stock.',
   PRODUCT_UPDATED_IN_CART: 'Product was successfully updated in cart.',
