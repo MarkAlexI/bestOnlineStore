@@ -56,7 +56,7 @@ app.get('/favicon.ico', (req, res) => {
 
 app.get('*', (req, res) => {
   logger.info(JSON.stringify(req.headers));
-  res.sendFile(path.join(staticPath, 'index.html'));
+  sendRes(res, 400, 'Wrong route!', req.headers);
 });
 
 app.use((error, req, res, next) => {
