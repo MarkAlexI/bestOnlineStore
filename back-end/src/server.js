@@ -54,13 +54,15 @@ app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(staticPath, 'favicon.ico'));
 });
 
-app.get('*', (req, res) => {
-  logger.info(JSON.stringify(req.headers));
-  sendRes(res, 400, 'Wrong route!', req.headers);
+app.use((req, res, next) => {
+  if (!req.route) {
+    return sendRes(res, 400, 'Wrong route!', null);
+  }
+  next();
 });
 
 app.use((error, req, res, next) => {
-  sendRes(res, 'Something went wrong!', error);
+  return sendRes(res, 'Something went wrong!', error);
 });
 
 const server = app.listen(port, () => {
