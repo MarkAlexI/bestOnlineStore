@@ -6,12 +6,17 @@ import {
 } from '../utils/constants.js';
 import ProductService from '../services/productService.js';
 import logger from '../utils/logger.js';
+import addLinks from '../utils/addLinks.js';
+
 const getAllProducts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const skip = (page - 1) * perPage;
 
   const result = await ProductService.getAllProducts(req.query, skip, perPage);
+
+  addLinks(res, page, perPage, result.data.totalProducts);
+
   return sendRes(res, result.status, result.message, result.data);
 };
 
