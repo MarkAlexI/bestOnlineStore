@@ -15,7 +15,13 @@ const getAllProducts = async (req, res) => {
 
   const result = await ProductService.getAllProducts(req.query, skip, perPage);
 
-  addLinks(res, page, perPage, result.data.totalProducts);
+  const url = req.protocol +
+    '://' +
+    req.hostname +
+    req.originalUrl.split('?').shift() +
+    `?perPage=${perPage}&page=`;
+
+  addLinks(res, page, perPage, result.data.totalProducts, url);
 
   return sendRes(res, result.status, result.message, result.data);
 };
