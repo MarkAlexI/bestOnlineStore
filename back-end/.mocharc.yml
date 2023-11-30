@@ -1,3 +1,4 @@
+no-setup-in-describe: false
 allow-uncaught: false
 async-only: false
 bail: true
