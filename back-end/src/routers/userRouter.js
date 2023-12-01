@@ -20,7 +20,6 @@ const userRouter = express.Router();
 
 
 userRouter.get('/', isAuth, isAdmin, getAllUsers);
-userRouter.post('/regtest', registerUser);
 userRouter.post('/register', validateUserData, registerUser);
 userRouter.get('/reganonymous', registerAnonymous);
 userRouter.post('/google', registerUserByGoogle);

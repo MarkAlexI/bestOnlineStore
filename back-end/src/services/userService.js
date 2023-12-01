@@ -378,7 +378,7 @@ class UserService {
   }
 
   static isAdmin(user) {
-    return user.isAdmin === true;
+    return user.email === process.env.ADMIN_EMAIL;
   }
 }
 
