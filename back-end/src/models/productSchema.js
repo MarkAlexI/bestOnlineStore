@@ -24,7 +24,7 @@ const productSchema = new mongoose.Schema({
   subcategory: { type: String, default: '' },
   instock: { type: Boolean, default: true },
   countInStock: { type: Number, default: 0 },
-  raiting: { type: Number, default: 3 },
+  rating: { type: Number, default: 3 },
   characteristics: [characteristicsSchema],
   numReviews: { type: Number, default: 0 },
   viewed: { type: Number, default: 0 },
