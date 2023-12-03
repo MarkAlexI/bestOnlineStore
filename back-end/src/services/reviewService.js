@@ -41,14 +41,9 @@ class ReviewService {
 
       const savedReview = await newReview.save();
 
-      const currRating = productToUpdate.rating;
-      const totalReviews = productToUpdate.numReviews;
-
-      productToUpdate.rating =
-        calculateNewRating(currRating, totalReviews, intRating);
       productToUpdate.reviews.push(savedReview._id);
 
-      productToUpdate.numReviews += 1;
+      await calculateNewRating(productToUpdate);
 
       await productToUpdate.save();
 
