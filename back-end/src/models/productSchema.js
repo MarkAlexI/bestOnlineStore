@@ -6,6 +6,14 @@ const characteristicsSchema = new mongoose.Schema({
   value: String
 });
 
+const reviewSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  rating: { type: Number, required: true },
+  comment: { type: String },
+  likes: { type: Number, default: 0 },
+  dislikes: { type: Number, default: 0 }
+}, { timestamps: true });
+
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: false },
   descr: { type: String, required: true },
@@ -28,10 +36,7 @@ const productSchema = new mongoose.Schema({
   characteristics: [characteristicsSchema],
   numReviews: { type: Number, default: 0 },
   viewed: { type: Number, default: 0 },
-  reviews: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Review'
-  }],
+  reviews: [reviewSchema],
   new: { type: Boolean, default: true }
 }, { timestamps: true }
 );

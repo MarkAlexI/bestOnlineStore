@@ -1,19 +1,15 @@
-import Review from '../models/reviewSchema.js';
-
 const calculateNewRating = async (product) => {
-  const reviewIds = product.reviews;
+  const reviews = product.reviews.slice();
   let totalRating = 0;
-
-  const reviews = await Review.find({ _id: { $in: reviewIds } });
 
   for (const review of reviews) {
     totalRating += review.rating;
   }
 
-  const newAverageRating = totalRating/reviewIds.length;
+  const newAverageRating = totalRating/reviews.length;
 
   product.rating = newAverageRating;
-  product.numReviews = reviewIds.length;
+  product.numReviews = reviews.length;
 
   return product;
 };

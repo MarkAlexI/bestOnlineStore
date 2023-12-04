@@ -1,4 +1,3 @@
-import Review from '../models/reviewSchema.js';
 import User from '../models/userSchema.js';
 import Product from '../models/productSchema.js';
 import {
@@ -32,16 +31,13 @@ class ReviewService {
       }
 
       const intRating = parseInt(rating, 10);
-      const newReview = new Review({
+      const newReview = {
         user,
-        product,
         rating: intRating,
         comment,
-      });
+      };
 
-      const savedReview = await newReview.save();
-
-      productToUpdate.reviews.push(savedReview._id);
+      productToUpdate.reviews.push(newReview);
 
       await calculateNewRating(productToUpdate);
 
@@ -63,7 +59,9 @@ class ReviewService {
 
   static async getReviewsForProduct(productId) {
     try {
-      const reviews = await Review.find({ product: productId });
+      const product = await Product.findById(productId);
+      const reviews = product.reviews.slice();
+
       return {
         status: HTTP_STATUS_CODES.OK,
         message: MESSAGES.REVIEWS_RETRIEVED_SUCCESSFULLY,
@@ -80,7 +78,17 @@ class ReviewService {
 
   static async updateReview(reviewId, updateFields, user) {
     try {
-      const reviewToUpdate = await Review.findById(reviewId);
+      const product = await Product.findOne({ 'reviews._id': reviewId });
+
+      if (!product) {
+        return {
+          status: HTTP_STATUS_CODES.NOT_FOUND,
+          message: MESSAGES.PRODUCT_NOT_FOUND,
+          data: null,
+        };
+      }
+
+      const reviewToUpdate = product.reviews.find(review => review._id.toString() === reviewId);
 
       if (!reviewToUpdate) {
         return {
@@ -91,16 +99,14 @@ class ReviewService {
       }
 
       if (user._id === reviewToUpdate.user.toString()) {
-        const updatedReview = await Review.findByIdAndUpdate(
-          reviewId,
-          updateFields,
-          { new: true }
-        );
+        reviewToUpdate.set(updateFields);
+        await calculateNewRating(product);
+        await product.save();
 
         return {
           status: HTTP_STATUS_CODES.OK,
           message: MESSAGES.REVIEW_UPDATED_SUCCESSFULLY,
-          data: { review: updatedReview },
+          data: { review: reviewToUpdate },
         };
       } else {
         return {
@@ -120,9 +126,19 @@ class ReviewService {
 
   static async deleteReview(reviewId, user) {
     try {
-      const reviewToDelete = await Review.findById(reviewId);
+      const product = await Product.findOne({ 'reviews._id': reviewId });
 
-      if (!reviewToDelete) {
+      if (!product) {
+        return {
+          status: HTTP_STATUS_CODES.NOT_FOUND,
+          message: MESSAGES.PRODUCT_NOT_FOUND,
+          data: null,
+        };
+      }
+
+      const reviewToDeleteIndex = product.reviews.findIndex(review => review._id.toString() === reviewId);
+
+      if (reviewToDeleteIndex === -1) {
         return {
           status: HTTP_STATUS_CODES.NOT_FOUND,
           message: MESSAGES.REVIEW_NOT_FOUND,
@@ -130,13 +146,15 @@ class ReviewService {
         };
       }
 
-      if (user._id === reviewToDelete.user.toString() || user.isAdmin === true) {
-        const deletedReview = await Review.findByIdAndDelete(reviewId);
+      if (user._id === product.reviews[reviewToDeleteIndex].user.toString() || user.isAdmin === true) {
+        product.reviews.splice(reviewToDeleteIndex, 1);
+        await calculateNewRating(product);
+        await product.save();
 
         return {
           status: HTTP_STATUS_CODES.OK,
           message: MESSAGES.REVIEW_DELETED_SUCCESSFULLY,
-          data: { review: deletedReview },
+          data: { review: product.reviews[reviewToDeleteIndex] },
         };
       } else {
         return {
