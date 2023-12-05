@@ -13,6 +13,7 @@ import uploadRouter from './routers/uploadRouter.js';
 import reviewRouter from './routers/reviewRouter.js';
 import wishListRouter from './routers/wishListRouter.js';
 import dataRouter from './routers/dataRouter.js';
+import blogRouter from './routers/blogRouter.js';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirName = path.dirname(__fileName);
@@ -44,6 +45,7 @@ app.use('/api/upload', uploadRouter);
 app.use('/api/review', reviewRouter);
 app.use('/api/wishlist', wishListRouter);
 app.use('/api/data', dataRouter);
+app.use('/api/blog', blogRouter);
 app.get('/ip', (req, res) => res.send(req.ip));
 
 const staticPath = path.join(__dirName, pathToIndex);
