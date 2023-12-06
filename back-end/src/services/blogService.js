@@ -121,7 +121,7 @@ class BlogService {
       }
 
       if (authorId === article.author.toString() || isAdmin === true) {
-        const deletedArticle = await article.remove();
+        const deletedArticle = await article.deleteOne();
 
         return {
           status: HTTP_STATUS_CODES.OK,
