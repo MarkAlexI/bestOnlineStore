@@ -7,7 +7,7 @@ const getAllArticles = async (req, res) => {
 };
 
 const getArticleById = async (req, res) => {
-  const result = await BlogService.getArticleById(req.params.articleId);
+  const result = await BlogService.getArticleById(req.params.id);
   return sendRes(res, result.status, result.message, result.data);
 };
 

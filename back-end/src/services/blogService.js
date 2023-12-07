@@ -23,10 +23,10 @@ class BlogService {
     }
   }
 
-  static async getArticleById(articleId) {
+  static async getArticleById(articleId) {console.log(articleId);
     try {
       const article = await Article.findById(articleId);
-
+      console.log(article);
       if (article) {
         return {
           status: HTTP_STATUS_CODES.OK,
@@ -40,7 +40,7 @@ class BlogService {
           data: null,
         };
       }
-    } catch (error) {
+    } catch (error) {console.log(error);
       return {
         status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
         message: MESSAGES.ERROR_FETCHING_ARTICLE,
