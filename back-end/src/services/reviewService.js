@@ -41,7 +41,10 @@ class ReviewService {
 
       await calculateNewRating(productToUpdate);
 
-      await productToUpdate.save();
+      const updatedProduct = await productToUpdate.save();
+
+      existingUser.reviews.push(updatedProduct._id);
+      existingUser.save();
 
       return {
         status: HTTP_STATUS_CODES.CREATED,
@@ -147,6 +150,11 @@ class ReviewService {
       }
 
       if (user._id === product.reviews[reviewToDeleteIndex].user.toString() || user.isAdmin === true) {
+        const updatedUser = await User.findOne(user._id);
+
+        updatedUser.reviews = updatedUser.reviews.filter(id => id.toString() !== reviewId);
+        await updatedUser.save();
+
         product.reviews.splice(reviewToDeleteIndex, 1);
         await calculateNewRating(product);
         await product.save();

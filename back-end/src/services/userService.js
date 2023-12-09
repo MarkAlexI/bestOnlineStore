@@ -198,7 +198,7 @@ class UserService {
 
       const orders = await Order.find({ user: userId });
       const productsWithMatchingReviews = await Product.find({ 'reviews.user': userId }, { 'reviews.$': 1 });
-      const reviews = productsWithMatchingReviews.map(product => product.reviews[0]);
+      const reviews = productsWithMatchingReviews.map(product => product.reviews);
 
       const userData = {
         user: user,
