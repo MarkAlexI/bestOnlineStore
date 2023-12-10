@@ -1,19 +1,11 @@
 import mongoose from 'mongoose';
+import Review from './reviewSchema.js';
 
 const characteristicsSchema = new mongoose.Schema({
   _id: false,
   key: String,
   value: String
 });
-
-const reviewSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-  rating: { type: Number, required: true },
-  comment: { type: String },
-  likes: { type: Number, default: 0 },
-  dislikes: { type: Number, default: 0 }
-}, { timestamps: true });
 
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: false },
@@ -37,7 +29,7 @@ const productSchema = new mongoose.Schema({
   characteristics: [characteristicsSchema],
   numReviews: { type: Number, default: 0 },
   viewed: { type: Number, default: 0 },
-  reviews: [reviewSchema],
+  reviews: [Review.schema],
   new: { type: Boolean, default: true }
 }, { timestamps: true }
 );

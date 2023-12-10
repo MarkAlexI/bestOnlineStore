@@ -196,14 +196,21 @@ class UserService {
         .populate('wishList')
         .select('-password -resetPasswordToken -resetPasswordExpires');
 
+      const reviewIds = user.reviews;
+
+      const productsWithReviews = await Product.find({ 'reviews._id': { $in: reviewIds } });
+
+      const reviews = productsWithReviews.reduce((acc, product) => {
+        const matchingReviews = product.reviews.filter(review => reviewIds.includes(review._id));
+        return acc.concat(matchingReviews);
+      }, []);
+      const updatedUser = { ...user._doc, reviews };
+
       const orders = await Order.find({ user: userId });
-      const productsWithMatchingReviews = await Product.find({ 'reviews.user': userId }, { 'reviews.$': 1 });
-      const reviews = productsWithMatchingReviews.map(product => product.reviews);
 
       const userData = {
-        user: user,
-        orders: orders,
-        reviews: reviews
+        user: updatedUser,
+        orders
       };
 
       if (user) {

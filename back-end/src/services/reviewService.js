@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import User from '../models/userSchema.js';
 import Product from '../models/productSchema.js';
 import {
@@ -30,9 +31,13 @@ class ReviewService {
         };
       }
 
+      const newReviewId = new mongoose.Types.ObjectId();
       const intRating = parseInt(rating, 10);
+
       const newReview = {
+        _id: newReviewId,
         user,
+        product,
         rating: intRating,
         comment,
       };
@@ -41,10 +46,10 @@ class ReviewService {
 
       await calculateNewRating(productToUpdate);
 
-      const updatedProduct = await productToUpdate.save();
+      await productToUpdate.save();
 
-      existingUser.reviews.push(updatedProduct._id);
-      existingUser.save();
+      existingUser.reviews.push(newReviewId);
+      await existingUser.save();
 
       return {
         status: HTTP_STATUS_CODES.CREATED,
@@ -150,7 +155,7 @@ class ReviewService {
       }
 
       if (user._id === product.reviews[reviewToDeleteIndex].user.toString() || user.isAdmin === true) {
-        const updatedUser = await User.findOne(user._id);
+        const updatedUser = await User.findById(user._id);
 
         updatedUser.reviews = updatedUser.reviews.filter(id => id.toString() !== reviewId);
         await updatedUser.save();
@@ -162,7 +167,7 @@ class ReviewService {
         return {
           status: HTTP_STATUS_CODES.OK,
           message: MESSAGES.REVIEW_DELETED_SUCCESSFULLY,
-          data: { review: product.reviews[reviewToDeleteIndex] },
+          data: null,
         };
       } else {
         return {
