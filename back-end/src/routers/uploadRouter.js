@@ -1,10 +1,10 @@
 import express from 'express';
 import isAuth from '../utils/auth.js';
 import {
-  upload,
   uploadFile,
   deleteFile
 } from '../controllers/uploadController.js';
+import { upload } from '../services/fileService.js';
 
 const uploadRouter = express.Router();
 
