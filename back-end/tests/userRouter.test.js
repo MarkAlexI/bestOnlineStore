@@ -24,6 +24,18 @@ describe('User Routes', function() {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('payload');
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('text');
+        expect(res.body).to.have.property('payload');
+        expect(res.body.message).to.be.equal('success');
+        expect(res.body.text).to.be.equal('User signed in successfully.');
+        expect(res.body.payload).to.have.property('_id');
+        expect(res.body.payload).to.have.property('firstName');
+        expect(res.body.payload).to.have.property('lastName');
+        expect(res.body.payload).to.have.property('email');
+        expect(res.body.payload).to.have.property('isAdmin');
+        expect(res.body.payload).to.have.property('isAnonymous');
         authToken = res.body.payload.token;
 
         done();
