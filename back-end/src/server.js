@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  return sendRes(res, 'Something went wrong!', error);
+  return sendRes(res, 500, 'Something went wrong!', error);
 });
 
 const server = app.listen(port, () => {
