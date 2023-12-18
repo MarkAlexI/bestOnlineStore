@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/server.js';
+import { MESSAGES } from '../src/utils/constants.js';
 
 process.env.TEST_ENV = 'true';
 
@@ -23,13 +24,12 @@ describe('User Routes', function() {
       .send(credentials)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('payload');
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('text');
         expect(res.body).to.have.property('payload');
         expect(res.body.message).to.be.equal('success');
-        expect(res.body.text).to.be.equal('User signed in successfully.');
+        expect(res.body.text).to.be.equal(MESSAGES.USER_SIGNED_IN);
         expect(res.body.payload).to.have.property('_id');
         expect(res.body.payload).to.have.property('firstName');
         expect(res.body.payload).to.have.property('lastName');
@@ -49,6 +49,18 @@ describe('User Routes', function() {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
+        expect(res._body).to.be.a('object');
+        expect(res._body).to.have.property('message');
+        expect(res._body).to.have.property('text');
+        expect(res._body).to.have.property('payload');
+        expect(res._body.message).to.be.equal('success');
+        expect(res._body.text).to.be.equal(MESSAGES.ALL_USERS_FETCHED);
+        expect(res._body.payload[0]).to.have.property('_id');
+        expect(res._body.payload[0]).to.have.property('firstName');
+        expect(res._body.payload[0]).to.have.property('lastName');
+        expect(res._body.payload[0]).to.have.property('email');
+        expect(res._body.payload[0]).to.have.property('isAdmin');
+        expect(res._body.payload[0]).to.have.property('isAnonymous');
         userId = res._body.payload[0]._id;
 
         done();

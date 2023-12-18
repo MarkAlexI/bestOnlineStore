@@ -12,6 +12,7 @@ const HTTP_STATUS_CODES = {
 
 const MESSAGES = {
   MISSING_REQUIRED_FIELDS: 'Missing required fields.',
+  USER_SIGNED_IN: 'User signed in successfully.',
   ALL_USERS_FETCHED: 'All users fetched successfully.',
   ERROR_FETCHING_USERS: 'Error while fetching all users.',
   ERROR_FETCHING_USER:'Error while fetching user by ID.',
