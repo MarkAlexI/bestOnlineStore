@@ -1,6 +1,6 @@
 {
   "name": "nodejsserver",
-  "version": "0.121.41",
+  "version": "0.122.41",
   "engines": {
     "node": ">=14.0.0"
   },
