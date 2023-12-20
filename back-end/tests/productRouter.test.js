@@ -15,6 +15,17 @@ describe('Product Routes', function() {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
+        expect(res._body).to.be.a('object');
+        expect(res._body).to.have.property('message');
+        expect(res._body).to.have.property('text');
+        expect(res._body).to.have.property('payload');
+        expect(res._body.message).to.be.equal('success');
+        expect(res._body.text).to.be.equal(MESSAGES.ALL_PRODUCTS_IN_PAYLOAD);
+        expect(res._body.payload).to.have.property('products');
+        expect(res._body.payload).to.have.property('totalProducts');
+        expect(res._body.payload.products[0]).to.have.property('_id');
+        expect(res._body.payload.products).to.be.a('array');
+        expect(res._body.payload.totalProducts).to.be.a('number');
 
         productId = res._body.payload.products[0]._id;
 

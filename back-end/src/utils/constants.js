@@ -14,6 +14,7 @@ const MESSAGES = {
   MISSING_REQUIRED_FIELDS: 'Missing required fields.',
   USER_SIGNED_IN: 'User signed in successfully.',
   ALL_USERS_FETCHED: 'All users fetched successfully.',
+  ALL_PRODUCTS_IN_PAYLOAD: 'All products in payload.',
   ERROR_FETCHING_USERS: 'Error while fetching all users.',
   ERROR_FETCHING_USER:'Error while fetching user by ID.',
   ERROR_FETCHING_ARTICLES: 'Error while fetching all articles.',

@@ -18,7 +18,7 @@ class ProductService {
 
       return {
         status: HTTP_STATUS_CODES.OK,
-        message: 'All products in payload.',
+        message: MESSAGES.ALL_PRODUCTS_IN_PAYLOAD,
         data: { products, totalProducts },
       };
     } catch (error) {
