@@ -30,7 +30,7 @@ const registerAnonymous = async (req, res, next) => {
     lastName: 'Unknown',
     email: `anonymous${Date.now()}@example.com`,
     password: 'qwW5#ertY1$',
-    phone: null
+    phone: '+38(000)000-00-00'
   };
 
   registerUser(req, res, next, anonymousUser);
