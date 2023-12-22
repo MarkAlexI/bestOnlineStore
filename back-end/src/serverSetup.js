@@ -14,7 +14,7 @@ const configureApp = (app) => {
 
   const corsOptions = {
     origin: true,
-    methods: 'GET,POST,PUT,DELETE',
+    methods: 'GET,POST,PUT,PATCH,DELETE',
     allowedHeaders: ['Origin, X-Requested-With, Content-Type, Accept, Key, Authorization'],
     credentials: true
   };
