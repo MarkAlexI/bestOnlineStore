@@ -1,6 +1,6 @@
 {
   "name": "nodejsserver",
-  "version": "0.124.41",
+  "version": "0.125.41",
   "engines": {
     "node": ">=14.0.0"
   },
@@ -35,7 +35,8 @@
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.4",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "ws": "^8.15.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",

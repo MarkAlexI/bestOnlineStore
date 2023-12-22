@@ -14,6 +14,8 @@ import reviewRouter from './routers/reviewRouter.js';
 import wishListRouter from './routers/wishListRouter.js';
 import dataRouter from './routers/dataRouter.js';
 import blogRouter from './routers/blogRouter.js';
+import { createServer } from 'http';
+import { WebSocketServer } from 'ws';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirName = path.dirname(__fileName);
@@ -34,6 +36,25 @@ if (mode === 'production') pathToIndex = '../../front-end/dist/front-end/';
 
 const port = process.env.PORT || 30000;
 const app = express();
+
+const server = createServer(app);
+
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', (ws, req) => {
+  logger.info(req.socket.remoteAddress);
+  logger.info('New WebSocket connection established.');
+
+  ws.send('Hi!');
+
+  ws.on('message', (message) => {
+    logger.info(`Received message: ${message}`);
+  });
+
+  ws.on('close', () => {
+    logger.info('WebSocket connection closed.');
+  });
+});
 
 configureApp(app);
 
@@ -67,7 +88,7 @@ app.use((error, req, res, next) => {
   return sendRes(res, 500, 'Something went wrong!', error);
 });
 
-const server = app.listen(port, () => {
+server.listen(port, () => {
   logger.info(`Server at http://localhost:${port}`);
 });
 
