@@ -16,6 +16,7 @@ import dataRouter from './routers/dataRouter.js';
 import blogRouter from './routers/blogRouter.js';
 import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
+import chatHandler from './websocketHandler.js';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirName = path.dirname(__fileName);
@@ -42,18 +43,8 @@ const server = createServer(app);
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws, req) => {
-  logger.info(req.socket.remoteAddress);
   logger.info('New WebSocket connection established.');
-
-  ws.send('Hi!');
-
-  ws.on('message', (message) => {
-    logger.info(`Received message: ${message}`);
-  });
-
-  ws.on('close', () => {
-    logger.info('WebSocket connection closed.');
-  });
+  chatHandler(ws, req);
 });
 
 configureApp(app);
