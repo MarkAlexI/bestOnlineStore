@@ -1,15 +1,81 @@
 import logger from './utils/logger.js';
 
+let chatHistory = '';
+
 const chatHandler = (ws, req) => {
-  ws.send('Hi!');
+  const path = req.url;
+
+  ws.send('Welcome to the online store chat! How can I assist you today?');
 
   ws.on('message', (message) => {
-    logger.info(`Received message: ${message}`);
+    logger.info(`Received message for path ${path}: ${message}`);
+
+    try {
+      const data = JSON.parse(message);
+
+      chatHistory += '\n' + data.text;
+
+      if (data.type === 'text') {
+        if (data.text.includes('payment') || data.text.includes('delivery')) {
+          questionsHandler(data.text, ws);
+        } else {
+          questionsHandler('oops', ws);
+        }
+      } else if (data.type === 'command') {
+        commandHandler(data.command, ws);
+      } else {
+        logger.warn(`Unknown message type: ${data.type}`);
+      }
+    } catch (error) {
+      logger.error(`Error parsing message: ${error.message}`);
+    }
   });
 
   ws.on('close', () => {
-    logger.info('WebSocket connection closed.');
+    logger.info(`WebSocket connection closed for path: ${path}`);
   });
 };
+
+function questionsHandler(text, ws) {
+  const answer = text.split('').reverse().join('');
+  chatHistory += '\n' + answer;
+
+  ws.send(answer);
+
+  return;
+}
+
+function commandHandler(command, ws) {
+  chatHistory += '\n' + command;
+
+  switch (command) {
+  case '/help':
+    ws.send('Available commands:\n/help - Display this help message\n/history - Show chat history\n/logout - Log out from the chat');
+    break;
+  case '/history':
+    sendChatHistory(ws);
+    break;
+  case '/logout':
+    handleLogout(ws);
+    break;
+  default:
+    logger.warn(`Unknown command: ${command}`);
+  }
+
+  return;
+}
+
+function sendChatHistory(ws) {
+  ws.send(`Chat History:\n${chatHistory}`);
+
+  return;
+}
+
+function handleLogout(ws) {
+  ws.send('You have been logged out. Thank you for chatting!');
+  ws.close();
+
+  return;
+}
 
 export default chatHandler;
