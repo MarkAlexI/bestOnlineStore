@@ -15,6 +15,8 @@ const orderSchema = new mongoose.Schema({
     update_time: String, email_address: String },
   paymentMethod: { type: String, default: 'Cash' },
   itemsPrice: { type: Number, required: true },
+  deliveryPrice: { type: Number, default: 0 },
+  totalPrice: { type: Number, default: 0 },
   status: {
     type: String,
     enum: ['Комплектується', 'Відправлено', 'Отримано'],

@@ -122,11 +122,16 @@ class OrderService {
 
       const newAddress = await existAddress.save();
 
+      const itemsPrice = cart.totalPrice;
+      const deliveryPrice = existAddress.deliveryMethod === 'Кур\'єрська доставка' ? 700 : 0;
+
       const order = new Order({
         cart: cart._id,
         shippingAddress: newAddress,
         paymentMethod: orderData.paymentMethod,
-        itemsPrice: cart.totalPrice,
+        itemsPrice: itemsPrice,
+        deliveryPrice: deliveryPrice,
+        totalPrice: itemsPrice + deliveryPrice,
         user: userId,
       });
 
