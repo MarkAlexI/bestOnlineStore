@@ -1,6 +1,7 @@
 import logger from './utils/logger.js';
+import { createChatHistory } from './utils/createChatHistory.js';
 
-let chatHistory = '';
+const chatHistory = createChatHistory();
 
 const chatHandler = (ws, req) => {
   const path = req.url;
@@ -13,7 +14,7 @@ const chatHandler = (ws, req) => {
     try {
       const data = JSON.parse(message);
 
-      chatHistory += '\n' + data.text;
+      chatHistory.addRecord(data.text);
 
       if (data.type === 'text') {
         if (data.text.includes('payment') || data.text.includes('delivery')) {
@@ -38,7 +39,7 @@ const chatHandler = (ws, req) => {
 
 function questionsHandler(text, ws) {
   const answer = text.split('').reverse().join('');
-  chatHistory += '\n' + answer;
+  chatHistory.addRecords(answer);
 
   ws.send(answer);
 
@@ -46,7 +47,7 @@ function questionsHandler(text, ws) {
 }
 
 function commandHandler(command, ws) {
-  chatHistory += '\n' + command;
+  chatHistory.addRecord(command);
 
   switch (command) {
   case '/help':
@@ -66,7 +67,7 @@ function commandHandler(command, ws) {
 }
 
 function sendChatHistory(ws) {
-  ws.send(`Chat History:\n${chatHistory}`);
+  ws.send(`Chat History:\n${chatHistory.getRecords()}`);
 
   return;
 }
