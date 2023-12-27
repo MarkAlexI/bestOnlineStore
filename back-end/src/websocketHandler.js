@@ -17,11 +17,7 @@ const chatHandler = (ws, req) => {
       chatHistory.addRecord(data.text);
 
       if (data.type === 'text') {
-        if (data.text.includes('payment') || data.text.includes('delivery')) {
-          questionsHandler(data.text, ws);
-        } else {
-          questionsHandler('oops', ws);
-        }
+        questionsHandler(data.text, ws);
       } else if (data.type === 'command') {
         commandHandler(data.command, ws);
       } else {
@@ -38,7 +34,16 @@ const chatHandler = (ws, req) => {
 };
 
 function questionsHandler(text, ws) {
-  const answer = text.split('').reverse().join('');
+  let answer = '', question = text.toLowerCase();
+
+  if (question.includes('payment') || question.includes('оплат')) {
+    answer = 'Можлива оплата при отриманні товару або карткою через iPay.';
+  } else if (question.includes('delivery') || question.includes('доставк')) {
+    answer = 'Можлива доставка Новою Поштою, кур\'єром або самовивіз (по Києву) та Укрпоштою.';
+  } else {
+    answer = 'Уточніть, будь-ласка, питання.';
+  }
+
   chatHistory.addRecords(answer);
 
   ws.send(answer);
