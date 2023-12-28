@@ -196,24 +196,24 @@ class UserService {
         .populate('wishList')
         .select('-password -resetPasswordToken -resetPasswordExpires');
 
-      const reviewIds = user.reviews;
-
-      const productsWithReviews = await Product.find({ 'reviews._id': { $in: reviewIds } });
-
-      const reviews = productsWithReviews.reduce((acc, product) => {
-        const matchingReviews = product.reviews.filter(review => reviewIds.includes(review._id));
-        return acc.concat(matchingReviews);
-      }, []);
-      const updatedUser = { ...user._doc, reviews };
-
-      const orders = await Order.find({ user: userId });
-
-      const userData = {
-        user: updatedUser,
-        orders
-      };
-
       if (user) {
+        const reviewIds = user.reviews;
+
+        const productsWithReviews = await Product.find({ 'reviews._id': { $in: reviewIds } });
+
+        const reviews = productsWithReviews.reduce((acc, product) => {
+          const matchingReviews = product.reviews.filter(review => reviewIds.includes(review._id));
+          return acc.concat(matchingReviews);
+        }, []);
+        const updatedUser = { ...user._doc, reviews };
+
+        const orders = await Order.find({ user: userId });
+
+        const userData = {
+          user: updatedUser,
+          orders
+        };
+
         return {
           status: HTTP_STATUS_CODES.OK,
           message: MESSAGES.USER_WAS_FOUND,
