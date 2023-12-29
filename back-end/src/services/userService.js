@@ -371,10 +371,16 @@ class UserService {
 
       const updatedUser = await user.save();
 
+      const populatedUser = await User.findById(updatedUser._id)
+        .select('-password')
+        .populate('shippingAddress');
+
       return {
         status: HTTP_STATUS_CODES.OK,
         message: MESSAGES.USER_WAS_UPDATED,
-        data: updatedUser,
+        data: {
+          user: populatedUser,
+        },
       };
     } catch (error) {
       return {
