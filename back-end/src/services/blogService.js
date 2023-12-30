@@ -23,7 +23,7 @@ class BlogService {
     }
   }
 
-  static async getArticleById(articleId) {console.log(articleId);
+  static async getArticleById(articleId) {
     try {
       const article = await Article.findById(articleId);
       console.log(article);

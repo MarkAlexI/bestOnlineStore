@@ -24,9 +24,11 @@ class ReviewService {
       const productToUpdate = await Product.findById(product);
 
       if (!productToUpdate || !existingUser) {
+        const errorMessage = !productToUpdate ? MESSAGES.PRODUCT_NOT_FOUND : MESSAGES.USER_NOT_FOUND;
+
         return {
           status: HTTP_STATUS_CODES.NOT_FOUND,
-          message: MESSAGES.PRODUCT_NOT_FOUND,
+          message: errorMessage,
           data: null,
         };
       }
