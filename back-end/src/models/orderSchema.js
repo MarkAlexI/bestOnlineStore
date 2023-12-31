@@ -16,7 +16,15 @@ const orderSchema = new mongoose.Schema({
   paymentMethod: { type: String, default: 'Cash' },
   itemsPrice: { type: Number, required: true },
   deliveryPrice: { type: Number, default: 0 },
-  totalPrice: { type: Number, default: 0 },
+  totalPrice: {
+    type: Number,
+    validate: {
+      validator: function() {
+        return this.itemsPrice + this.deliveryPrice === this.totalPrice;
+      },
+      message: 'The totalPrice value must equal the sum of itemsPrice and deliveryPrice.',
+    },
+  },
   status: {
     type: String,
     enum: ['Комплектується', 'Відправлено', 'Отримано'],
