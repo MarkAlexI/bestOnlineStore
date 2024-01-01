@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import userNameRegex from '../utils/userNameRegex.js';
+import userNameRegex from './userNameRegex.js';
 
 const validateUserData = [
   body('firstName')

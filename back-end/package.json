@@ -1,8 +1,8 @@
 {
   "name": "nodejsserver",
-  "version": "0.132.44",
+  "version": "0.133.44",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "description": "Server for online store 'Lykke Store'.",
   "main": "dist/index.js",

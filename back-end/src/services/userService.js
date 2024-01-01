@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TOKEN_DURATIONS
 } from '../utils/constants.js';
-import userNameRegex from '../utils/userNameRegex.js';
+import userNameRegex from '../validation/userNameRegex.js';
 
 class UserService {
   static async getAllUsers() {
