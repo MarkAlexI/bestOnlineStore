@@ -32,6 +32,7 @@ const configureApp = (app) => {
     }),
   );
   app.use('*', (req, res, next) => {
+    res.setHeader('Cache-control', 'no-cache');
     logger.info(req.originalUrl);
     next();
   });
