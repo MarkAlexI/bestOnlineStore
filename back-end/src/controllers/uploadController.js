@@ -47,8 +47,9 @@ const deleteFileForEntity = async (req, res, EntityModel, entityName) => {
 
       if (imageIndex >= 0 && imageIndex < images.length) {
         const imagePath = images[imageIndex];
+        const fileName = imagePath.slice(imagePath.lastIndexOf('/') + 1);
 
-        await FileService.deleteFile(imagePath);
+        await FileService.deleteFile(fileName);
 
         entity.allImages.splice(imageIndex, 1);
 

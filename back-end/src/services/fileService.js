@@ -53,13 +53,13 @@ const FileService = {
     });
   },
 
-  deleteFile: async (imagePath) => {
+  deleteFile: async (fileName) => {
     try {
-      await bucket.file(imagePath).delete();
+      await bucket.file(fileName).delete();
 
-      logger.info(`File deleted successfully: ${imagePath}`);
+      logger.info(`File deleted successfully: ${fileName}`);
     } catch (error) {
-      logger.error(`Error deleting file ${imagePath}:`, error);
+      logger.error(`Error deleting file ${fileName}:`, error);
       throw error;
     }
     return;
