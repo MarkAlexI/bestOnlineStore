@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import RateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import { xss } from 'express-xss-sanitizer';
-import logger from './utils/logger.js';
+import logger from '../utils/logger.js';
 
 const configureApp = (app) => {
   const limiter = RateLimit({

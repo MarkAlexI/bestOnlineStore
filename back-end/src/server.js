@@ -4,7 +4,7 @@ import logger from './utils/logger.js';
 import path from 'path';
 import sendRes from './utils/handleResponse.js';
 import dbConnection from './db.js';
-import configureApp from './serverSetup.js';
+import configureApp from './config/serverSetup.js';
 import userRouter from './routers/userRouter.js';
 import productRouter from './routers/productRouter.js';
 import cartRouter from './routers/cartRouter.js';
