@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
-import sendRes from './handleResponse.js';
+import sendRes from '../utils/handleResponse.js';
 import {
   HTTP_STATUS_CODES,
   MESSAGES
-} from './constants.js';
+} from '../utils/constants.js';
 
 const isAuth = (req, res, next) => {
   const { authorization } = req.headers;

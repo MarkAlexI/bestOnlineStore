@@ -1,9 +1,9 @@
-import logger from './logger.js';
-import sendRes from './handleResponse.js';
+import logger from '../utils/logger.js';
+import sendRes from '../utils//handleResponse.js';
 import {
   HTTP_STATUS_CODES,
   MESSAGES
-} from './constants.js';
+} from '../utils/constants.js';
 
 const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {

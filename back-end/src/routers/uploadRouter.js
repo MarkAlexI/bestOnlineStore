@@ -1,5 +1,5 @@
 import express from 'express';
-import isAuth from '../utils/auth.js';
+import isAuth from '../middlewares/auth.js';
 import {
   saveProductImage,
   saveArticleImage,

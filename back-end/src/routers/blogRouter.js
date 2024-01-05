@@ -6,7 +6,7 @@ import {
   updateArticle,
   deleteArticle
 } from '../controllers/blogController.js';
-import isAuth from '../utils/auth.js';
+import isAuth from '../middlewares/auth.js';
 
 const blogRouter = express.Router();
 

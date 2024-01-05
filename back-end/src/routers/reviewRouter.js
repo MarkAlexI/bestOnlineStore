@@ -5,7 +5,7 @@ import {
   updateReview,
   deleteReview
 } from '../controllers/reviewController.js';
-import isAuth from '../utils/auth.js';
+import isAuth from '../middlewares/auth.js';
 
 const reviewRouter = express.Router();
 
