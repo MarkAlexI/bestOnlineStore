@@ -1,10 +1,10 @@
 {
   "name": "nodejsserver",
-  "version": "0.136.45",
+  "version": "0.137.45",
   "engines": {
     "node": ">=18.0.0"
   },
-  "description": "Server for online store 'Lykke Store'.",
+  "description": "Server with wss-chat for online store 'Lykke Store'.",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -57,7 +57,8 @@
     "nodejs",
     "server",
     "mongodb",
-    "expressjs"
+    "expressjs",
+    "ws"
   ],
   "author": "markalexi",
   "license": "MIT",
