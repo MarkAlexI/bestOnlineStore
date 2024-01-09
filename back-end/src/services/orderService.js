@@ -103,7 +103,6 @@ class OrderService {
       }
 
       let existAddress = await ShippingAddress.findOne({ user: userId });
-      const { isCourier } = orderData;
 
       if (!existAddress) {
         existAddress = new ShippingAddress({
@@ -124,7 +123,7 @@ class OrderService {
       const newAddress = await existAddress.save();
 
       const itemsPrice = cart.totalPrice;
-      const deliveryPrice = isCourier ? 700 : 0;
+      const deliveryPrice = existAddress.deliveryMethod === 'Кур\'єрська доставка' ? 700 : 0;
 
       const order = new Order({
         cart: cart._id,
@@ -134,7 +133,6 @@ class OrderService {
         deliveryPrice: deliveryPrice,
         totalPrice: itemsPrice + deliveryPrice,
         user: userId,
-        isCourier: isCourier,
       });
 
       const savedOrder = await order.save();

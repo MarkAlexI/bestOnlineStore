@@ -30,7 +30,6 @@ const orderSchema = new mongoose.Schema({
     enum: ['Комплектується', 'Відправлено', 'Отримано'],
     default: 'Комплектується'
   },
-  isCourier: { type: Boolean, default: false },
   user: { type: mongoose.Schema.Types.ObjectId,
     ref: 'User', required: true },
   isPaid: { type: Boolean, default: false },
