@@ -10,7 +10,7 @@ import { NovaPoshtaComponent } from './nova-poshta/nova-poshta.component';
 import { UkrPoshtaComponent } from './ukr-poshta/ukr-poshta.component';
 import { CourierComponent } from './courier/courier.component';
 import { SelfPickupComponent } from './self-pickup/self-pickup.component';
-import { DeliveryService } from '@shared/services/interaction/department.service';
+import { DeliveryService } from '@shared/services/interaction/delivery.service';
 
 @Directive({
   selector: '[appDepartment]',

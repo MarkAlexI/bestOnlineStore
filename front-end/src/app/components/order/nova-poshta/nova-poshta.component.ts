@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InputCheckBoxComponent } from '@shared/components/inputs/input-check-box/input-check-box.component';
 import { InputSelectComponent } from '@shared/components/inputs/input-select/input-select.component';
 import { getCities, getNovaPoshtaDepartment } from '@shared/utils/nova-poshta';
-import { DeliveryService } from '@shared/services/interaction/department.service';
+import { DeliveryService } from '@shared/services/interaction/delivery.service';
 
 @Component({
   selector: 'app-nova-poshta',

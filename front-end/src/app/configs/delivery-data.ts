@@ -36,3 +36,19 @@ export const deliveryData: DeliveryData[] = [
     department: 'SelfPickUp',
   },
 ];
+
+export interface PaymentMethod {
+  title: string;
+  isChecked: boolean;
+}
+
+export const paymentMethod: PaymentMethod[] = [
+  {
+    title: 'Під час отримання товару',
+    isChecked: false,
+  },
+  {
+    title: 'Оплата картою через EasyPay',
+    isChecked: false,
+  },
+];

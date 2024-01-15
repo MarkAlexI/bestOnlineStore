@@ -1,4 +1,4 @@
-<div class="adv">
+<section class="adv" *ngIf="advs?.length">
   <div class="adv__title">Вам може сподобатися:</div>
   <div class="adv__wrap">
     <div class="adv__body" *ngFor="let adv of advs">
@@ -28,4 +28,4 @@
       </div>
     </div>
   </div>
-</div>
+</section>

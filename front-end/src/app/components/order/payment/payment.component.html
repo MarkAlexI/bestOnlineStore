@@ -1,12 +1,29 @@
 <section class="payment">
   <div class="payment__title">Оплата</div>
   <div class="payment__drop-down">
-    <div class="payment__drop-down__item">
-      <app-portmone></app-portmone>
-      <p>Під час отримання товару</p>
+    <div class="payment__drop-down__item" (click)="openToggle()">
+      <div class="payment__drop-down__chosen">
+        <app-portmone></app-portmone>
+        <p>{{ paymentTitle }}</p>
+      </div>
+      <div>
+        <img [src]="svg.shiftRight" alt="expand arrow" />
+      </div>
     </div>
-    <div>
-      <img [src]="svg.shiftRight" alt="expand arrow" />
+    <div [ngClass]="isOpen ? 'checkboxes' : 'checkboxes__hidden'">
+      <ng-container *ngIf="isOpen">
+        <div
+          class="checkboxes__item"
+          *ngFor="let item of paymentMethod; index as id"
+        >
+          <input-checkbox
+            [disabled]="item.isChecked"
+            (checkbox)="onCheckBox($event, id)"
+          >
+            <p title>{{ item.title }}</p>
+          </input-checkbox>
+        </div>
+      </ng-container>
     </div>
   </div>
 </section>

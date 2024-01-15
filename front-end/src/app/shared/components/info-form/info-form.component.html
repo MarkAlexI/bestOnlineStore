@@ -2,12 +2,11 @@
 <form
   class="user__form"
   [formGroup]="infoForm"
-  (ngSubmit)="isCart ? makeOrder() : updateUser()"
+  (ngSubmit)="makeOrder()"
   autocomplete="on"
 >
   <app-info-form-item
     [infoForm]="infoForm"
-    (departments)="getDepartments($event)"
     [isCart]="isCart"
   ></app-info-form-item>
 

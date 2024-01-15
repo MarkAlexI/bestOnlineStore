@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 import { TransformPricePipe } from '@shared/pipes/transform-price.pipe';
 import { ProductCardComponent } from '@shared/components/product-card/product-card.component';
@@ -11,7 +11,13 @@ import { IconComponent } from '@shared/components/icon/icon.component';
 @Component({
   selector: 'app-cart-ad',
   standalone: true,
-  imports: [NgFor, TransformPricePipe, ProductCardComponent, IconComponent],
+  imports: [
+    NgFor,
+    NgIf,
+    TransformPricePipe,
+    ProductCardComponent,
+    IconComponent,
+  ],
   templateUrl: './cart-ad.component.html',
   styleUrls: ['./cart-ad.component.scss'],
 })

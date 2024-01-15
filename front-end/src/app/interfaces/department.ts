@@ -8,4 +8,19 @@ export type DepData = {
   apartment?: string;
   time?: string;
   isValid: boolean;
+  paymentMethod?: string;
+};
+
+export type Order = {
+  items?: [
+    {
+      _id: string;
+      quantity?: number;
+      price?: number;
+      totalPrice?: number;
+      name?: string;
+      img?: string;
+    }
+  ];
+  completePrice?: number;
 };

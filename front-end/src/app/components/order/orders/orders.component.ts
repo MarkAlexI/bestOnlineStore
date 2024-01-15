@@ -1,67 +1,50 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Orders } from '@interfaces/user.interface';
 import { TransformPricePipe } from '@shared/pipes/transform-price.pipe';
-import { Subscription, map, tap } from 'rxjs';
-import { CartService } from 'app/components/cart/services/cart.service';
+import { Subscription } from 'rxjs';
 import { IconComponent } from '@shared/components/icon/icon.component';
 import { FormsModule } from '@angular/forms';
+import { DeliveryService } from '@shared/services/interaction/delivery.service';
+import { OrdersCounterComponent } from '@shared/components/orders-counter/orders-counter.component';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, FormsModule, TransformPricePipe, IconComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TransformPricePipe,
+    IconComponent,
+    OrdersCounterComponent,
+  ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit, OnDestroy {
   @Input() orders!: Orders[];
   @Output() total = new EventEmitter<number>();
 
-  private readonly cartService = inject(CartService);
+  private readonly deliveryService = inject(DeliveryService);
   private readonly unSub = new Subscription();
 
-  public minQuantity: number = 1;
-  public maxQuantity: number = 100;
-
-  increase(id: string | undefined, quantity: number) {
-    if (id && quantity) {
-      this.makeCartOrders(id, quantity + 1);
-    }
-  }
-
-  decrease(id: string | undefined, quantity: number) {
-    if (id && quantity) {
-      this.makeCartOrders(id, quantity - 1);
-    }
-  }
-
-  private makeCartOrders(id: string, quantity: number) {
+  ngOnInit(): void {
     this.unSub.add(
-      this.cartService
-        .makeOrder(id, quantity)
-        .pipe(
-          tap(() => {
-            this.getCartOrders();
-          })
-        )
-        .subscribe()
+      this.deliveryService.orderCounter$.subscribe((total) => {
+        this.total.emit(total);
+      })
     );
   }
 
-  private getCartOrders() {
-    this.unSub.add(
-      this.cartService
-        .getCart()
-        .pipe(
-          map((res: any) => {
-            this.total.emit(res.payload.totalPrice);
-            this.orders = res.payload.items.filter(
-              (item: Orders) => item.quantity
-            );
-          })
-        )
-        .subscribe()
-    );
+  ngOnDestroy(): void {
+    this.unSub.unsubscribe();
   }
 }

@@ -37,79 +37,9 @@
         flex-shrink: 0;
       }
     }
-
-    &__count {
-      display: flex;
-      width: 48px;
-      height: 32px;
-      padding: 8px;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-
-    &__name {
-      @include fonts.montserrat(20px, 400, normal, 130%);
-
-      width: 400px;
-      color: colors.$color-text;
-    }
-
-    &__price {
-      @include fonts.montserrat(20px, 400, normal, 130%);
-
-      width: 100%;
-      color: colors.$black;
-    }
-  }
-
-  &__input {
-    @include fonts.primary-roboto(20px, 400, normal, 130%);
-
-    width: 56px;
-    padding: 8px;
-    text-align: center;
-    outline: none;
-    border-radius: 2px;
-    border: 1px solid colors.$gray;
-    background: colors.$white;
-  }
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
-}
-/* Для Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-.group {
-  &__count {
-    display: flex;
-    align-items: flex-start;
-
-    gap: 253px;
-  }
-
-  &__price {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0;
   }
 }
 
-.increase,
-.decrease {
-  cursor: pointer;
-}
-
-.items__elem {
-  display: flex;
-  align-items: flex-start;
+.orders-counter {
   width: 100%;
-  gap: 176px;
 }

@@ -1,0 +1,37 @@
+<div class="items__elem">
+  <div class="group__count">
+    <p class="order__order__name">{{ order.name }}</p>
+    <div class="order__order__count">
+      <span class="decrease" (click)="decrease(order.product, +quantity.value)">
+        <app-icon
+          [path]="'minus'"
+          [size]="{ width: '26px', height: '27px' }"
+          [viewBox]="'0 0 26 27'"
+          [fill]="'none'"
+        ></app-icon>
+      </span>
+      <input
+        #quantity
+        type="number"
+        [min]="minQuantity"
+        [max]="maxQuantity"
+        [(ngModel)]="order.quantity"
+        class="order__input"
+        disabled
+      />
+      <span class="increase" (click)="increase(order.product, +quantity.value)">
+        <app-icon
+          [path]="'increase'"
+          [size]="{ width: '26px', height: '27px' }"
+          [viewBox]="'0 0 26 27'"
+          [fill]="'none'"
+        ></app-icon>
+      </span>
+    </div>
+  </div>
+  <div class="group__price">
+    <p class="order__order__price">
+      {{ order.price * order.quantity | transformPrice }}
+    </p>
+  </div>
+</div>

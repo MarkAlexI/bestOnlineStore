@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { Subscription, tap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, tap, map } from 'rxjs';
 
 import { UserService } from 'app/components/user/services/user.service';
 import {
@@ -19,12 +19,9 @@ import {
   phoneValidator,
 } from '@shared/utils/validators';
 import { setupInitialValue } from '@shared/utils/initial-from-local';
-
 import { ErrorValidationComponent } from '@shared/components/error-validation/error-validation.component';
-import { UserInfo } from '@interfaces/user.interface';
 import { InfoFormItemComponent } from './info-form-item/info-form-item.component';
-import { DeliveryFormItemComponent } from './delivery-form-item/delivery-form-item.component';
-import { getNovaPoshtaDepartment } from '@shared/utils/nova-poshta';
+import { AuthService } from 'app/components/user/services/signin-flow/auth.service';
 
 @Component({
   selector: 'app-info-form',
@@ -34,7 +31,6 @@ import { getNovaPoshtaDepartment } from '@shared/utils/nova-poshta';
     ReactiveFormsModule,
     ErrorValidationComponent,
     InfoFormItemComponent,
-    DeliveryFormItemComponent,
   ],
   templateUrl: './info-form.component.html',
   styleUrls: ['./info-form.component.scss'],
@@ -44,14 +40,11 @@ export class InfoFormComponent implements OnInit, OnDestroy, AfterViewChecked {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
   private unSub = new Subscription();
-
-  public path!: string;
+  private timeOutId!: any;
 
   @Input() isCart = false;
-  private user!: UserInfo;
-  isDepartment = false;
-  departments: any;
 
   public infoForm = this.fb.group({
     firstName: [
@@ -96,12 +89,6 @@ export class InfoFormComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.getUserInfo();
-
-    this.route.url.subscribe((urlSegment: UrlSegment[]) => {
-      if (urlSegment[0]) {
-        this.path = urlSegment[0].path;
-      }
-    });
   }
 
   ngAfterViewChecked(): void {
@@ -120,48 +107,28 @@ export class InfoFormComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  updateUser() {
-    this.unSub.add(
-      this.userService.updateUser(this.infoForm.value).subscribe((res: any) => {
-        setupInitialValue(this.infoForm, res.payload.user);
-      })
-    );
-  }
-
   makeOrder() {
     if (this.infoForm.value) {
+      console.log('make order');
       this.unSub.add(
-        this.userService.updateUser(this.infoForm.value).subscribe(() => {
-          this.router.navigate([{ outlets: { cart: null } }], {
-            relativeTo: this.route.parent,
-          });
-        })
-      );
-      this.router.navigate(['/order']);
-    }
-  }
-
-  getDepartments(event: { city: string; ref: string }) {
-    const { city, ref } = event;
-    if (city) {
-      getNovaPoshtaDepartment(city, ref)
-        .then((res: any) => res.json())
-        .then((res: any) => {
-          this.isDepartment = true;
-          return (this.departments = res.data
-            .filter((data: any) => {
-              return data.CategoryOfWarehouse !== 'Postomat';
+        this.userService
+          .updateUser(this.infoForm.value)
+          .pipe(
+            map((res) => {
+              this.authService.nextUser(res);
+              return res;
+            }),
+            tap(() => {
+              this.router.navigate([{ outlets: { cart: null } }], {
+                relativeTo: this.route.parent,
+              });
+            }),
+            tap(() => {
+              this.router.navigate(['/order']);
             })
-            .map((data: any) => {
-              return {
-                city: data.CityDescription,
-                description: data.Description,
-              };
-            }));
-        })
-        .catch((e: any) => {
-          console.error(e);
-        });
+          )
+          .subscribe(() => {})
+      );
     }
   }
 
@@ -170,25 +137,24 @@ export class InfoFormComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.getUserInfo();
   }
 
-  getUserInfo() {
+  private getUserInfo() {
     this.unSub.add(
       this.userService
         .getUserById(JSON.parse(localStorage.getItem('user')!)._id)
         .pipe(
-          tap((res: any) => {
-            this.user = res.user;
-            setupInitialValue(this.infoForm, this.user);
+          map((res: any) => {
+            setupInitialValue(this.infoForm, res.user);
+            return res;
           })
         )
         .subscribe()
     );
   }
 
-  redirectToContact() {
-    this.router.navigate(['/about/contact']);
-  }
-
   ngOnDestroy(): void {
     this.unSub.unsubscribe();
+    if (this.timeOutId) {
+      clearTimeout(this.timeOutId);
+    }
   }
 }

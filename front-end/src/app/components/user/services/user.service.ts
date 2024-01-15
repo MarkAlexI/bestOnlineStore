@@ -4,7 +4,7 @@ import { configs } from '@configs/configs';
 import { PAYLOAD } from '@interfaces/request.interface';
 import { UserInfo } from '@interfaces/user.interface';
 import { HttpErrorHandlerService } from '@shared/services/http-error-handler.service';
-import { Observable, catchError, config, map, retry, tap } from 'rxjs';
+import { Observable, catchError, map, retry, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -37,16 +37,17 @@ export class UserService {
     );
   }
 
-  updateUser(user: UserInfo): Observable<UserInfo | PAYLOAD<UserInfo>> {
+  updateUser(userNew: UserInfo): Observable<UserInfo | PAYLOAD<UserInfo>> {
     return this.http
-      .put<PAYLOAD<UserInfo>>(`${configs.URL}/user/profile`, user)
+      .put<PAYLOAD<UserInfo>>(`${configs.URL}/user/profile`, userNew)
       .pipe(
         retry(3),
-        tap((res: PAYLOAD<UserInfo>) => {
+        map((res: PAYLOAD<UserInfo>) => {
           const user = res.payload.user;
           user.token = JSON.parse(localStorage.getItem('user')!).token;
 
           localStorage.setItem('user', JSON.stringify(user));
+          return res.payload.user;
         }),
         catchError(
           this.httpErrorHandler.handleError<UserInfo>('Невдалося оновити дані!')

@@ -1,8 +1,7 @@
-import { Component, ElementRef, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartService } from './services/cart.service';
 import { CartOrdersComponent } from './cart-orders/cart-orders.component';
 import { CartAdComponent } from './cart-ad/cart-ad.component';
 
@@ -23,7 +22,6 @@ export class CartComponent {
 
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly elementRef = inject(ElementRef);
   isAdv = true;
 
   close() {

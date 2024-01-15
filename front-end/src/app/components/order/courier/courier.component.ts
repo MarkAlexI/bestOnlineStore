@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TransformPricePipe } from '@shared/pipes/transform-price.pipe';
-import { DeliveryService } from '@shared/services/interaction/department.service';
+import { DeliveryService } from '@shared/services/interaction/delivery.service';
 import { DepData } from '@interfaces/department';
 
 @Component({

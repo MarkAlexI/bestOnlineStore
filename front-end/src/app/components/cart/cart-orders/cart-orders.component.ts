@@ -9,18 +9,19 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subscription, map, tap } from 'rxjs';
 
 import { Orders } from '@interfaces/user.interface';
 import { TransformPricePipe } from '@shared/pipes/transform-price.pipe';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CartService } from '../services/cart.service';
-import { InfoComponent } from 'app/components/user/components/info/info.component';
 import { InfoFormComponent } from '@shared/components/info-form/info-form.component';
-import { Subscription, map, tap } from 'rxjs';
 import { IconComponent } from '@shared/components/icon/icon.component';
 import { AuthService } from 'app/components/user/services/signin-flow/auth.service';
+import { OrdersCounterComponent } from '@shared/components/orders-counter/orders-counter.component';
+import { DeliveryService } from '@shared/services/interaction/delivery.service';
+import { SpinnerService } from '@shared/services/interaction/spinner.service';
 
 @Component({
   selector: 'app-cart-orders',
@@ -28,14 +29,11 @@ import { AuthService } from 'app/components/user/services/signin-flow/auth.servi
   imports: [
     NgFor,
     NgIf,
-    AsyncPipe,
-    JsonPipe,
     TransformPricePipe,
-    FormsModule,
     RouterLink,
-    InfoComponent,
     InfoFormComponent,
     IconComponent,
+    OrdersCounterComponent,
   ],
   templateUrl: './cart-orders.component.html',
   styleUrls: ['./cart-orders.component.scss'],
@@ -50,43 +48,30 @@ export class CartOrdersComponent
   private readonly route = inject(ActivatedRoute);
   private readonly cartService = inject(CartService);
   private readonly authService = inject(AuthService);
+  private readonly deliveryService = inject(DeliveryService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly spinnerService = inject(SpinnerService);
   private unSub = new Subscription();
 
   private timeoutID!: any;
-  public maxQuantity = 100;
-  public minQuantity = 1;
   public total!: number;
 
   public isComplete = true;
   public isCart = true;
   public isValid = false;
-
+  public isLoading = false;
   public orders!: Orders[];
 
   ngOnInit(): void {
+    this.unSub.add(
+      this.deliveryService.orderCounter$.subscribe((total) => {
+        this.total = total;
+      })
+    );
     this.getCartOrders();
     this.isCart = true;
-  }
-
-  getCartOrders() {
     this.unSub.add(
-      this.cartService
-        .getCart()
-        .pipe(
-          map((res: any) => {
-            console.log(res);
-            this.total = res.payload.totalPrice;
-            this.orders = res.payload.items.filter(
-              (item: Orders) => item.quantity
-            );
-
-            if (!this.orders?.length) {
-              this.advertisement.emit(false);
-            }
-          })
-        )
-        .subscribe()
+      this.spinnerService.spinner$.subscribe((b) => (this.isLoading = b))
     );
   }
 
@@ -100,34 +85,27 @@ export class CartOrdersComponent
     }
   }
 
-  increase(id: string | undefined, quantity: number) {
-    if (id && quantity) {
-      this.unSub.add(
-        this.cartService
-          .makeOrder(id, quantity + 1)
-          .pipe(
-            tap(() => {
-              this.getCartOrders();
-            })
-          )
-          .subscribe()
-      );
-    }
-  }
+  private getCartOrders() {
+    this.unSub.add(
+      this.cartService
+        .getCart()
+        .pipe(
+          map((res: any) => {
+            this.total = res.payload.totalPrice;
+            this.orders = res.payload.items.filter(
+              (item: Orders) => item.quantity
+            );
 
-  decrease(id: string | undefined, quantity: number) {
-    if (id && quantity) {
-      this.unSub.add(
-        this.cartService
-          .makeOrder(id, quantity - 1)
-          .pipe(
-            tap(() => {
-              this.getCartOrders();
-            })
-          )
-          .subscribe()
-      );
-    }
+            if (!this.orders?.length) {
+              this.advertisement.emit(false);
+            }
+            if (this.orders?.length) {
+              this.advertisement.emit(true);
+            }
+          })
+        )
+        .subscribe()
+    );
   }
 
   delete(id: string) {
@@ -153,10 +131,8 @@ export class CartOrdersComponent
 
   completeOrder() {
     if (this.authService.isAuth() && !this.authService.isAnonym()) {
+      this.close();
       this.router.navigate(['/order']);
-      this.timeoutID = setTimeout(() => {
-        this.close();
-      }, 10);
     } else {
       this.isComplete = false;
       this.advertisement.emit(false);
@@ -167,8 +143,6 @@ export class CartOrdersComponent
     this.isComplete = true;
     this.advertisement.emit(true);
   }
-
-  submit() {}
 
   ngOnDestroy(): void {
     this.unSub.unsubscribe();

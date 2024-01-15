@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Type } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, retry, tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, map, Observable, retry } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { Auth, signOut } from '@angular/fire/auth';
@@ -30,7 +30,7 @@ export class AuthService {
           const user = res.payload;
 
           this.setLocalStorage(user);
-          this.user.next(user);
+          this.nextUser(user);
           return user;
         }),
         catchError(
@@ -47,7 +47,7 @@ export class AuthService {
         const user = res.payload;
 
         this.setLocalStorage(user);
-        this.user.next(user);
+        this.nextUser(user);
         return user;
       }),
       catchError(
@@ -65,7 +65,7 @@ export class AuthService {
         map((res: any) => {
           const user: User = res.payload;
           this.setLocalStorage(user);
-          this.user.next(user);
+          this.nextUser(user);
           return user;
         }),
         catchError(
@@ -81,7 +81,7 @@ export class AuthService {
       map((res: any) => {
         const user: User = res.payload;
         this.setLocalStorage(user);
-        this.user.next(user);
+        this.nextUser(user);
 
         return user;
       }),
@@ -114,7 +114,7 @@ export class AuthService {
       signOut(this.googleAuth)
         .then(() => {
           localStorage.clear();
-          this.user.next(null);
+          this.nextUser(null);
           this.router.navigate(['/']);
         })
         .catch((error) => {
@@ -136,5 +136,9 @@ export class AuthService {
 
     payload.expDate = expDate;
     localStorage.setItem('user', JSON.stringify(payload));
+  }
+
+  nextUser(user: User | null) {
+    this.user.next(user);
   }
 }

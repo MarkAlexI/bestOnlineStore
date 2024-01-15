@@ -5,7 +5,7 @@ import { deliveryData } from '@configs/delivery-data';
 import { InputCheckBoxComponent } from '@shared/components/inputs/input-check-box/input-check-box.component';
 import { TransformPricePipe } from '@shared/pipes/transform-price.pipe';
 import { DepartmentDirective } from '../department.directive';
-import { DeliveryService } from '@shared/services/interaction/department.service';
+import { DeliveryService } from '@shared/services/interaction/delivery.service';
 
 @Component({
   selector: 'app-department',
@@ -20,15 +20,16 @@ import { DeliveryService } from '@shared/services/interaction/department.service
   styleUrls: ['./department.component.scss'],
 })
 export class DepartmentComponent implements OnInit {
-  @Output() deliveryPrice = new EventEmitter<number>();
+  @Output() deliveryPrice = new EventEmitter<string>();
 
   private readonly deliveryService = inject(DeliveryService);
-  public readonly deliveryData = deliveryData;
+  public deliveryData = deliveryData;
   public department: string = '';
 
   ngOnInit(): void {
     this.checkValidation();
   }
+
   onCheckBox(event: boolean, id: number) {
     this.department = this.deliveryData[id].department;
 
@@ -47,9 +48,16 @@ export class DepartmentComponent implements OnInit {
       this.deliveryData[id].department === 'Courier' &&
       !this.deliveryData[id].isClosed
     ) {
-      this.deliveryPrice.emit(this.deliveryData[id].price);
-    } else {
-      this.deliveryPrice.emit(0);
+      this.deliveryPrice.emit('add');
+      this.deliveryService.delivery({
+        deliveryMethod: this.deliveryData[id].department!,
+        isValid: false,
+      });
+    } else if (
+      this.deliveryData[id].department === 'Courier' &&
+      this.deliveryData[id].isClosed
+    ) {
+      this.deliveryPrice.emit('reduce');
     }
 
     this.checkValidation();
