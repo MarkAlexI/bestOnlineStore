@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import User from '../models/userSchema.js';
 import Product from '../models/productSchema.js';
+import Review from '../models/reviewSchema.js';
 import {
   HTTP_STATUS_CODES,
   MESSAGES
@@ -67,6 +68,76 @@ class ReviewService {
     }
   }
 
+  static async addReviewAnswer(reviewId, commenterId, commentText) {
+    try {
+      const review = await Review.findById(reviewId);
+
+      review.answers.push({
+        user: commenterId,
+        text: commentText
+      });
+
+      const updatedReview = await review.save();
+
+      return {
+        status: HTTP_STATUS_CODES.OK,
+        message: MESSAGES.REVIEW_ADDED_SUCCESSFULLY,
+        data: { review: updatedReview },
+      };
+    } catch (error) {
+      return {
+        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        message: MESSAGES.ERROR_WHILE_ADDING_REVIEW,
+        data: error,
+      };
+    }
+  }
+
+  static async addReviewDislike(reviewId, commenterId) {
+    try {
+      const review = await Review.findById(reviewId);
+
+      if (!review.dislikes.includes(commenterId)) {
+        review.dislikes.push(commenterId);
+        review.save();
+      }
+
+      return {
+        status: HTTP_STATUS_CODES.OK,
+        message: MESSAGES.REVIEW_ADDED_SUCCESSFULLY,
+        data: { message: 'Dislike added.' },
+      };
+    } catch (error) {
+      return {
+        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        message: MESSAGES.ERROR_WHILE_ADDING_REVIEW,
+        data: error,
+      };
+    }
+  }
+
+  static async addReviewLike(reviewId, commenterId) {
+    try {
+      const review = await Review.findById(reviewId);
+
+      if (!review.likes.includes(commenterId)) {
+        review.likes.push(commenterId);
+        review.save();
+      }
+
+      return {
+        status: HTTP_STATUS_CODES.OK,
+        message: MESSAGES.REVIEW_ADDED_SUCCESSFULLY,
+        data: { message: 'Like added.' },
+      };
+    } catch (error) {
+      return {
+        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        message: MESSAGES.ERROR_WHILE_ADDING_REVIEW,
+        data: error,
+      };
+    }
+  }
   static async getReviewsForProduct(productId) {
     try {
       const product = await Product.findById(productId);
