@@ -93,51 +93,34 @@ class ReviewService {
     }
   }
 
-  static async addReviewDislike(reviewId, commenterId) {
+  static async updateReviewReaction(reviewId, commenterId, reaction) {
     try {
       const review = await Review.findById(reviewId);
+      const reactionField = reaction + 's';
 
-      if (!review.dislikes.includes(commenterId)) {
-        review.dislikes.push(commenterId);
-        review.save();
+      if (!review[reactionField].includes(commenterId)) {
+        review[reactionField].push(commenterId);
+        review[reactionField == 'likes' ? 'dislikes' : 'likes'].pull(commenterId);
+      } else {
+        review[reactionField].pull(commenterId);
       }
+
+      const updatedReview = await review.save();
 
       return {
         status: HTTP_STATUS_CODES.OK,
-        message: MESSAGES.REVIEW_ADDED_SUCCESSFULLY,
-        data: { message: 'Dislike added.' },
+        message: MESSAGES.REVIEW_UPDATED_SUCCESSFULLY,
+        data: { review: updatedReview },
       };
     } catch (error) {
       return {
         status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
-        message: MESSAGES.ERROR_WHILE_ADDING_REVIEW,
+        message: MESSAGES.ERROR_WHILE_UPDATING_REVIEW,
         data: error,
       };
     }
   }
 
-  static async addReviewLike(reviewId, commenterId) {
-    try {
-      const review = await Review.findById(reviewId);
-
-      if (!review.likes.includes(commenterId)) {
-        review.likes.push(commenterId);
-        review.save();
-      }
-
-      return {
-        status: HTTP_STATUS_CODES.OK,
-        message: MESSAGES.REVIEW_ADDED_SUCCESSFULLY,
-        data: { message: 'Like added.' },
-      };
-    } catch (error) {
-      return {
-        status: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
-        message: MESSAGES.ERROR_WHILE_ADDING_REVIEW,
-        data: error,
-      };
-    }
-  }
   static async getReviewsForProduct(productId) {
     try {
       const product = await Product.findById(productId);

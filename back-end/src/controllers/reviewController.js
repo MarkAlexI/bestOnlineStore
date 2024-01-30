@@ -7,27 +7,20 @@ const addReview = async (req, res) => {
 };
 
 const addReviewAnswer = async (req, res) => {
-  const {reviewId} = req.params;
+  const { reviewId } = req.params;
   const commenterId = req.user._id;
-  const {comment} = req.body;
+  const { comment } = req.body;
 
   const result = await ReviewService.addReviewAnswer(reviewId, commenterId, comment);
   return sendRes(res, result.status, result.message, result.data);
 };
 
-const addReviewDislike = async (req, res) => {
-  const {reviewId} = req.params;
+const updateReviewReaction = async (req, res) => {
+  const { reviewId } = req.params;
+  const { reaction } = req.body;
   const commenterId = req.user._id;
 
-  const result = await ReviewService.addReviewDislike(reviewId, commenterId);
-  return sendRes(res, result.status, result.message, result.data);
-};
-
-const addReviewLike = async (req, res) => {
-  const {reviewId} = req.params;
-  const commenterId = req.user._id;
-
-  const result = await ReviewService.addReviewLike(reviewId, commenterId);
+  const result = await ReviewService.updateReviewReaction(reviewId, commenterId, reaction);
   return sendRes(res, result.status, result.message, result.data);
 };
 
@@ -49,8 +42,7 @@ const deleteReview = async (req, res) => {
 export {
   addReview,
   addReviewAnswer,
-  addReviewDislike,
-  addReviewLike,
+  updateReviewReaction,
   getReviewsForProduct,
   updateReview,
   deleteReview

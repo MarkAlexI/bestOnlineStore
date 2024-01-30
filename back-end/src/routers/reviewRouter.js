@@ -2,8 +2,7 @@ import express from 'express';
 import {
   addReview,
   addReviewAnswer,
-  addReviewDislike,
-  addReviewLike,
+  updateReviewReaction,
   getReviewsForProduct,
   updateReview,
   deleteReview
@@ -14,8 +13,7 @@ const reviewRouter = express.Router();
 
 reviewRouter.post('/add', isAuth, addReview);
 reviewRouter.post('/add/:reviewId/answer', isAuth, addReviewAnswer);
-reviewRouter.post('/add/:reviewId/dislike', isAuth, addReviewDislike);
-reviewRouter.post('/add/:reviewId/like', isAuth, addReviewLike);
+reviewRouter.post('/add/:reviewId/reaction', isAuth, updateReviewReaction);
 reviewRouter.get('/product/:productId', getReviewsForProduct);
 reviewRouter.put('/update/:reviewId', isAuth, updateReview);
 reviewRouter.delete('/delete/:reviewId', isAuth, deleteReview);
