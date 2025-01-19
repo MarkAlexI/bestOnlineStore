@@ -1,6 +1,6 @@
 {
   "name": "nodejsserver",
-  "version": "0.143.45",
+  "version": "0.143.46",
   "engines": {
     "node": ">=18.0.0"
   },
@@ -31,10 +31,12 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
-    "mongoose": "^7.4.3",
+    "mongoose": "^8.9.5",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.4",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "winston": "^3.10.0",
     "ws": "^8.15.1"
   },
@@ -50,7 +52,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-security": "^1.7.1",
     "husky": "^8.0.3",
-    "lint-staged": "^14.0.0",
+    "lint-staged": "^15.4.1",
     "mocha": "^10.2.0"
   },
   "keywords": [
