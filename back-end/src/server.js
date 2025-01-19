@@ -17,6 +17,8 @@ import blogRouter from './routers/blogRouter.js';
 import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 import chatHandler from './websocketHandler.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from './config/swagger.js';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirName = path.dirname(__fileName);
@@ -35,6 +37,7 @@ for (let i = 0; i < args.length; i++) {
 logger.info('mode: ' + mode);
 if (mode === 'production') pathToIndex = '../../front-end/dist/front-end/';
 
+const host = process.env.HOST || 'http://localhost';
 const port = process.env.PORT || 30000;
 const app = express();
 
@@ -59,6 +62,7 @@ app.use('/api/wishlist', wishListRouter);
 app.use('/api/data', dataRouter);
 app.use('/api/blog', blogRouter);
 app.get('/ip', (req, res) => res.send(req.ip));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 const staticPath = path.join(__dirName, pathToIndex);
 
@@ -80,7 +84,7 @@ app.use((error, req, res, next) => {
 });
 
 server.listen(port, () => {
-  logger.info(`Server at http://localhost:${port}`);
+  logger.info(`Server at ${host}:${port}`);
 });
 
 server.on('close', () => {
