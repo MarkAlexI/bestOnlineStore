@@ -1,24 +1,41 @@
 <section class="products">
-  <p class="products__path">{{ "Каталог / " + categoryName + " / " + subcategory.name }}</p>
-  <h2 class="products__title">{{ subcategory.name }}</h2>
-  <span class="products__cards-filter" (click)="isClickFilter = !isClickFilter">Фільтри</span>
-  <div class="products__cards-sort">
-    <span (click)="isClickSort = !isClickSort">Сортувати</span>
-      <ul class="products__list-sort" *ngIf="isClickSort">
-        <li (click)="isClickSort = !isClickSort">Новинки</li>
-        <li (click)="isClickSort = !isClickSort">Спочатку дешевші</li>
-        <li (click)="isClickSort = !isClickSort">Спочатку дорожчі</li>
-        <li (click)="isClickSort = !isClickSort">За популярністю</li>
-      </ul>
+  <div class="path">
+    <app-path (passSubcategory)="passSubcategory($event)">
+      <span>Каталог</span>
+    </app-path>
   </div>
+  <h2 class="products__title">{{ subCategory }}</h2>
+  <span class="products__cards-filter" (click)="isClickFilter = !isClickFilter"
+    >Фільтри</span
+  >
+
+  <app-sorting
+    [products]="products"
+    (sortedProducts)="sortedProducts($event)"
+  ></app-sorting>
+
   <div class="products__cards">
-    <div *ngFor="let product of subcategory.products">
+    <div *ngFor="let product of products">
       <app-product-card [product]="product"></app-product-card>
     </div>
   </div>
+  <div class="nav__page">
+    <span class="nav__page-arrow-reverse" (click)="previousPage()">
+      <img [src]="svg.arrowRight" alt="next page" />
+    </span>
+    <span class="nav__page-number">{{ currentPage }}</span>
+    <span class="nav__page-arrow" (click)="nextPage()">
+      <img [src]="svg.arrowRight" alt="next page" />
+    </span>
+  </div>
 </section>
 <app-filters
+  [products]="products"
   *ngIf="isClickFilter"
   [isClickFilter]="isClickFilter"
+  [subCategory]="subCategory"
+  [page]="page"
+  [currentPage]="currentPage"
   (isClickFilterChange)="onIsClickFilterChange($event)"
+  (filteredProducts)="filteredProducts($event)"
 ></app-filters>

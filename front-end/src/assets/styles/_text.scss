@@ -1,0 +1,15 @@
+@use "fonts";
+@use "colors";
+
+@mixin user-title {
+  @include fonts.primary-roboto(28px, 400, normal, 130%);
+
+  text-align: center;
+}
+
+@mixin price-discount {
+  @include fonts.primary-roboto(14px, 400, normal, 130%);
+
+  text-decoration-line: line-through;
+  color: colors.$sale-color;
+}

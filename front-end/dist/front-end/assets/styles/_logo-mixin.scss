@@ -1,3 +1,5 @@
+@use "fonts";
+
 @mixin logo {
   display: flex;
   justify-content: center;
@@ -7,15 +9,10 @@
 }
 
 @mixin text {
+  @include fonts.font-manrope(32px, 500, normal, 130%);
   text-decoration: none;
   margin: 0;
   padding: 0;
-  font-family: "Manrope";
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 130%; /* 41.6px */
-  color: #000;
 }
 
 @mixin image {

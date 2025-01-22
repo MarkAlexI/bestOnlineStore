@@ -1,0 +1,44 @@
+@mixin alert-text {
+  text-align: center;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.alert {
+  display: block;
+  position: sticky;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 600;
+  z-index: 800;
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__text {
+    padding: 2rem;
+  }
+
+  &__danger {
+    @include alert-text;
+    background: rgba(255, 0, 0, 0.5);
+  }
+
+  &__success {
+    @include alert-text;
+    background-color: rgba(0, 128, 0, 0.5);
+  }
+
+  &__warning {
+    @include alert-text;
+    background: rgba(255, 136, 0, 0.5);
+  }
+}

@@ -1,0 +1,27 @@
+@use "colors";
+
+.header {
+  display: block;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: colors.$white;
+  z-index: 100;
+
+  &__box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 24px 80px;
+    width: 1920px;
+    top: 0;
+    left: 0;
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

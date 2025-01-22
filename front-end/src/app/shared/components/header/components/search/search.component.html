@@ -1,0 +1,31 @@
+<section>
+  <div class="header__input">
+    <input
+      #input
+      class="input__search"
+      type="text"
+      (keyup.enter)="searchBtn(input.value)"
+      (keyup)="search(input.value)"
+      placeholder="Пошук"
+    />
+    <p class="btn__input__search" (click)="searchBtn(input.value)">
+      <app-icon
+        [path]="'search'"
+        [size]="{ width: '24px', height: '24px' }"
+        [viewBox]="'0 0 24 24'"
+      />
+    </p>
+  </div>
+  <div class="search" *ngIf="answer">
+    <ul class="search__items">
+      <li
+        *ngFor="let item of answer"
+        class="search__item"
+        [appEnPath]="item"
+        (click)="clearBox()"
+      >
+        {{ item.name }}
+      </li>
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+<form class="user__form" [formGroup]="infoForm">
+  <div class="user__wrap-input" [ngClass]="isValid(infoForm, 'firstName')">
+    <input
+      type="text"
+      class="user__input"
+      formControlName="firstName"
+      placeholder="Ім'я *"
+    />
+    <app-error-validation
+      [control]="infoForm.get('firstName')"
+    ></app-error-validation>
+  </div>
+  <div class="user__wrap-input" [ngClass]="isValid(infoForm, 'lastName')">
+    <input
+      type="text"
+      class="user__input"
+      formControlName="lastName"
+      placeholder="Прізвище *"
+    />
+    <app-error-validation
+      [control]="infoForm.get('lastName')"
+    ></app-error-validation>
+  </div>
+  <div class="user__wrap-input" [ngClass]="isValid(infoForm, 'email')">
+    <input
+      type="email"
+      class="user__input"
+      formControlName="email"
+      placeholder="Email *"
+    />
+    <app-error-validation
+      [control]="infoForm.get('email')"
+    ></app-error-validation>
+  </div>
+  <div class="user__wrap-input" [ngClass]="isValid(infoForm, 'phone')">
+    <span>
+      <app-icon
+        [path]="'flag'"
+        [size]="{ width: '23px', height: '23px' }"
+        [viewBox]="'0 0 23 23'"
+      ></app-icon>
+    </span>
+    <span class="phone-holder">{{ phoneHolder }}</span>
+    <input type="text" formControlName="phone" class="user__input" />
+    <app-error-validation
+      [control]="infoForm.get('phone')"
+    ></app-error-validation>
+  </div>
+  <div class="user__wrap-input" [ngClass]="isValid(infoForm, 'address')">
+    <input
+      #addr
+      type="text"
+      class="user__input"
+      formControlName="address"
+      placeholder="Адреса *"
+      (keyup)="getAddress(addr.value)"
+      [value]="infoForm.get('address')?.value"
+      (blur)="onblur()"
+    />
+    <app-error-validation
+      [control]="infoForm.get('address')"
+    ></app-error-validation>
+  </div>
+  <div [ngClass]="{ hidden: isCart }">
+    <div class="user__wrap-input" [ngClass]="isValid(infoForm, 'password')">
+      <input
+        type="password"
+        class="user__input"
+        formControlName="password"
+        placeholder="Пароль *"
+      />
+      <app-error-validation
+        [control]="infoForm.get('password')"
+      ></app-error-validation>
+    </div>
+  </div>
+
+  <div class="address__list" *ngIf="addresses.length && isChosen">
+    <ul class="address__list-items">
+      <li
+        class="address__list-item"
+        *ngFor="let address of addresses"
+        (click)="chosenAddress(address)"
+      >
+        {{ address.SettlementTypeDescription }} {{ address.Description }}
+        {{ address.RegionsDescription }} {{ address.AreaDescription }}
+      </li>
+    </ul>
+  </div>
+</form>

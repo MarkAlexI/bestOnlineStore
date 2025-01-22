@@ -1,0 +1,11 @@
+<ng-container *ngIf="text">
+  <div [ngClass]="alertClass">
+    <div class="alert__wrap">
+      <p class="alert__text">{{ text }}</p>
+      <p *ngIf="errorText">{{ errorText }}</p>
+      <div style="padding: 10px">
+        <button class="btn btn__add" (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

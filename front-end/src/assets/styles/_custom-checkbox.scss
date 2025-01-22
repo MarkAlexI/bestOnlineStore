@@ -1,0 +1,43 @@
+@use "fonts";
+
+input[type="radio"] {
+  @include fonts.font-roboto;
+
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(--form-background);
+  /* Not removed via appearance */
+  margin: 0;
+
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+  z-index: 0;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  clip-path: polygon(0% 27%, 0 25%, 50% 95%, 80% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 5px 5px var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+  z-index: 0;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+  z-index: 0;
+}

@@ -1,5 +1,6 @@
-.advices {
+@import "colors";
 
+.advices {
   &__container {
     display: flex;
     flex-direction: column;
@@ -9,7 +10,6 @@
 
   &__title {
     margin-bottom: 100px;
-    font-family: "Roboto";
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
@@ -19,22 +19,35 @@
 
   &__images {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
+    gap: 100px;
     justify-content: space-between;
     align-items: center;
   }
 }
 
 .temp__image {
-  margin-bottom: 20px;
-  width: 360px;
+  width: 28%;
   height: 471px;
-  background: #d9d9d9;
+  background-color: $main-color;
 
   &__wide {
-    margin-bottom: 20px;
-    width: 800px;
+    width: 64%;
     height: 471px;
-    background: #d9d9d9;
+    background-color: $main-color;
+  }
+
+  &-one {
+    background-image: url("../../../../../assets/pics/png/advices/advice1.jpg");
+  }
+  &-two {
+    background-image: url("../../../../../assets/pics/png/advices/advice2.jpg");
+  }
+  &-three {
+    background-image: url("../../../../../assets/pics/png/advices/advice4.jpg");
+  }
+  &-four {
+    background-image: url("../../../../../assets/pics/png/advices/advice3.jpg");
   }
 }

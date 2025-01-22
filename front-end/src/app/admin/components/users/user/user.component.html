@@ -1,0 +1,14 @@
+<section class="user">
+  <ng-container *ngIf="user$ | async as user">
+    <app-user-card [user]="user">
+      <div class="card__info">Адреса: {{ user.shippingAddress?.address }}</div>
+      <div>Адміністратор: {{ user.isAdmin }}</div>
+      <div>Анонімний: {{ user.isAnonymous }}</div>
+      <div>Список бажаного: {{ user.wishList?.join(" ") }}</div>
+      <div class="action">
+        <span class="link" (click)="edit()">Редагувати</span>
+        <span class="link" routerLink="/admin/users">Назад до списку</span>
+      </div>
+    </app-user-card>
+  </ng-container>
+</section>

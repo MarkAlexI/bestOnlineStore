@@ -1,0 +1,59 @@
+// @import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Satisfy&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+
+@use "colors";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Roboto:ital,wght@0,400;0,500;1,300&family=Satisfy&family=Titan+One&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Manrope&family=Roboto:ital,wght@0,400;0,500;1,300&family=Satisfy&family=Titan+One&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+@mixin satisfy {
+  font-family: "Satisfy", cursive;
+}
+@mixin inter {
+  font-family: "Inter", sans-serif;
+}
+@mixin font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+@mixin font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@mixin primary-roboto($size, $weight, $style, $height) {
+  @include font-roboto;
+
+  font-size: $size;
+  font-weight: $weight;
+  font-style: $style;
+  line-height: $height;
+  color: colors.$black;
+}
+
+@mixin font-manrope($size, $weight, $style, $height) {
+  font-family: "Manrope", sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  font-style: $style;
+  line-height: $height;
+  color: colors.$black;
+}
+
+@mixin montserrat($size, $weight, $style, $height) {
+  font-family: "Montserrat", sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  font-style: $style;
+  line-height: $height;
+}
+
+@mixin inter($size, $weight, $style, $height) {
+  font-family: "Inter";
+  font-size: $size;
+  font-weight: $weight;
+  font-style: $style;
+  line-height: $height;
+}

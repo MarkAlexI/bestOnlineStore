@@ -1,0 +1,17 @@
+@use "colors";
+
+input {
+  max-width: 536px;
+  height: 29px;
+  border: none;
+  outline: none;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+
+  &::placeholder {
+    color: colors.$border-input;
+  }
+}

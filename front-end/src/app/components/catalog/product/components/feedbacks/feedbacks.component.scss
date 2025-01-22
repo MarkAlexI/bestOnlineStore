@@ -1,0 +1,179 @@
+@import "colors";
+
+.feedbacks {
+  padding: 80px 0;
+  text-align: center;
+  font-size: 22px;
+
+  &__title {
+    margin-bottom: 45px;
+    font-size: 32px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  &__add {
+    text-align: left;
+    margin-bottom: 58px;
+  }
+
+  &__num {
+    margin-bottom: 36px;
+  }
+
+  &__inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  &__input-text {
+    width: 100%;
+    color: $input-text;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    border-radius: 8px;
+    border: 1px solid $input-text;
+    padding: 16px;
+  }
+
+  &__input-file {
+    position: relative;
+  }
+
+  &__file-icon {
+    display: inline-block;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid $gray;
+    cursor: pointer;
+  }
+
+  &__container {
+    text-align: left;
+    margin-bottom: 56px;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid $gray;
+  }
+
+  &__person {
+    margin-bottom: 32px;
+  }
+
+  &__person,
+  &__person-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__person-img {
+    margin-right: 24px;
+    width: 100px;
+    height: 100px;
+    background-color: $main-color;
+    border-radius: 50%;
+  }
+
+  &__person-name {
+    font-weight: 500;
+  }
+
+  &__photos {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    margin-right: 72px;
+  }
+
+  &__photos-container {
+    margin-left: 122px;
+    margin-right: 48px;
+  }
+
+  &__photo {
+    margin-right: 24px;
+    display: inline-block;
+    background-color: $main-color;
+    width: 162px;
+    height: 162px;
+  }
+
+  &__all-photo {
+    color: #000;
+  }
+
+  &__text-container {
+    margin-left: 122px;
+    margin-bottom: 72px;
+  }
+
+  &__text-title {
+    font-weight: 500;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__btn-answer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 56px;
+
+    a {
+      color: black;
+      font-size: 22px;
+      text-decoration: none;
+    }
+
+    button {
+      background-color: transparent;
+      display: flex;
+      padding: 16px;
+      align-items: center;
+      gap: 16px;
+      border-radius: 8px;
+      border: 1px solid $gray;
+    }
+  }
+
+  &__likes {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__dislike,
+  &__like {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__see-all {
+    width: 274px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    font-size: 20px;
+    font-weight: 300;
+    text-transform: uppercase;
+    background-color: transparent;
+  }
+}
+p {
+  margin-bottom: 16px;
+  font-size: 21px;
+  line-height: 136%;
+}
+
+input[type="file"] {
+  display: none;
+}

@@ -1,0 +1,22 @@
+<div class="user__info-title">Особиста інформація</div>
+<form
+  class="user__form"
+  [formGroup]="infoForm"
+  (ngSubmit)="isCart ? makeOrder() : updateUser()"
+  autocomplete="on"
+>
+  <app-info-form-item
+    [infoForm]="infoForm"
+    (departments)="getDepartments($event)"
+    [isCart]="isCart"
+  ></app-info-form-item>
+  <app-delivery-form-item
+    [infoForm]="infoForm"
+    [isDepartment]="isDepartment"
+    [departments]="departments"
+    (getDepartment)="getDepartments($event)"
+  ></app-delivery-form-item>
+  <div class="delivery__actions">
+    <ng-content></ng-content>
+  </div>
+</form>

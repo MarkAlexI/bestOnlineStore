@@ -1,0 +1,13 @@
+<ng-container *ngIf="product$ | async as product">
+  <app-edit-product-item [product]="product" [isUpdate]="isUpdate">
+    <button class="btn btn__add" type="submit" [disabled]="!valid">
+      Редагувати
+    </button>
+    <button class="btn btn__add" type="button" (click)="cancel()">
+      Відмінити
+    </button>
+    <button type="button" class="btn btn__add" (click)="delete(product._id)">
+      Видалити
+    </button>
+  </app-edit-product-item>
+</ng-container>

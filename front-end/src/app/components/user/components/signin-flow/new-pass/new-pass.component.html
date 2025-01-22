@@ -1,0 +1,75 @@
+<div class="recover">
+  <div class="recover__wrap" *ngIf="isRecover; else send">
+    <p>Введіть новий пароль</p>
+    <form
+      class="recover__form"
+      [formGroup]="newPassForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <p>{{ getEmail() }}</p>
+      <div class="form__container">
+        <div class="input__wrap" [ngClass]="isValid(newPassForm, 'password')">
+          <input
+            #passVis
+            class="recover__input"
+            type="password"
+            formControlName="password"
+            placeholder="Введіть пароль*"
+          />
+          <span class="icon" (click)="isVisisble(passVis)">
+            <app-visibility-icon></app-visibility-icon>
+          </span>
+          <app-error-validation
+            [control]="newPassForm.get('password')"
+          ></app-error-validation>
+        </div>
+
+        <div
+          class="input__wrap"
+          [ngClass]="isValid(newPassForm, 'confirmPassword')"
+        >
+          <input
+            #confPassVis
+            class="recover__input"
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Підтвердіть пароль*"
+          />
+          <span class="icon" (click)="isVisisble(confPassVis)">
+            <app-visibility-icon></app-visibility-icon>
+          </span>
+          <app-error-validation
+            [control]="newPassForm.get('confirmPassword')"
+          ></app-error-validation>
+        </div>
+      </div>
+
+      <div class="action">
+        <div>
+          <button
+            class="btn btn__add"
+            type="submit"
+            [disabled]="!newPassForm.valid"
+          >
+            Відновити
+          </button>
+        </div>
+        <div>
+          <button class="btn btn__add" type="button" (click)="cancel()">
+            Скасувати
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<ng-template #send>
+  <div class="recover__form recover__wrap">
+    <div>
+      <p>{{ recoverPass$ | async }}</p>
+    </div>
+    <div>
+      <button class="btn" type="button" (click)="cancel()">Закрити</button>
+    </div>
+  </div>
+</ng-template>

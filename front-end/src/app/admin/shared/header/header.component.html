@@ -1,0 +1,27 @@
+<nav class="header__nav">
+  <app-menu-item [menuFor]="main">Меню</app-menu-item>
+
+  <ng-template #main>
+    <app-menu>
+      <app-menu-item [menuFor]="products">Товари</app-menu-item>
+      <app-menu-item [menuFor]="users">Користувачі</app-menu-item>
+      <app-menu-item [menuFor]="orders">Замовлення</app-menu-item>
+      <app-menu-item [menuFor]="reviews">Відгуки</app-menu-item>
+    </app-menu>
+  </ng-template>
+  <ng-template #products>
+    <app-menu-item routerLink="/admin/products"> Всі товари </app-menu-item>
+    <app-menu-item routerLink="/admin/products/add">
+      Створити новий
+    </app-menu-item>
+  </ng-template>
+  <ng-template #users>
+    <app-menu-item routerLink="/admin/users">Всі користувачі</app-menu-item>
+  </ng-template>
+  <ng-template #orders>
+    <app-menu-item routerLink="/admin/orders">Всі Замовлення</app-menu-item>
+  </ng-template>
+  <ng-template #reviews>
+    <app-menu-item routerLink="/admin/reviews">Всі відгуки</app-menu-item>
+  </ng-template>
+</nav>

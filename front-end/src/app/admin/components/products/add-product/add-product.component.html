@@ -1,0 +1,10 @@
+<section class="add-product">
+  <app-edit-product-item [isCreate]="isCreate">
+    <button class="btn btn__add" type="submit" [disabled]="!valid">
+      Додати
+    </button>
+    <button class="btn btn__add" type="button" (click)="cancel()">
+      Відмінити
+    </button>
+  </app-edit-product-item>
+</section>

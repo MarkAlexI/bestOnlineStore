@@ -18,7 +18,6 @@ import {
 
 const userRouter = express.Router();
 
-
 userRouter.get('/', isAuth, isAdmin, getAllUsers);
 userRouter.post('/register', validateUserData, registerUser);
 userRouter.get('/reganonymous', registerAnonymous);

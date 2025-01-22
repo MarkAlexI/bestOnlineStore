@@ -1,0 +1,133 @@
+@import "colors";
+
+.product {
+  font-size: 22px;
+  color: #000;
+
+  &__content {
+    padding: 80px 0;
+    display: flex;
+    gap: 25px;
+    max-width: 1612px;
+    margin: 0 auto;
+  }
+
+  &__main-image {
+    position: relative;
+  }
+
+  &__sale {
+    position: absolute;
+    left: 0;
+    padding: 19px 70px;
+    background-color: $dark-gray;
+    color: #fff;
+    font-size: 32px;
+  }
+
+  &__images {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__sub-image {
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+  }
+
+  &__stock {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 25px;
+  }
+
+  &__title {
+    padding: 0 40px 20px;
+    color: #000;
+    text-align: right;
+    font-size: 40px;
+    font-weight: 500;
+  }
+  &__guarantee {
+    margin-bottom: 24px;
+  }
+
+  &__colors {
+    margin-bottom: 24px;
+
+    span {
+      display: inline-block;
+      margin-right: 16px;
+      width: 50px;
+      height: 50px;
+      background-color: $main-color;
+      border-radius: 50%;
+
+      &:first-child {
+        background-color: $light-gray;
+      }
+    }
+  }
+
+  &__prices {
+    margin: 32px 0;
+    font-size: 40px;
+  }
+
+  &__crossed-price {
+    padding-left: 25px;
+    display: inline-block;
+    color: $sale-color;
+    font-size: 32px;
+    text-decoration: line-through;
+  }
+  &__bold {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__buy {
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background: #000;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 100%;
+    display: flex;
+    width: 274px;
+    padding: 16px 3px;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__select {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    text-transform: uppercase;
+    display: flex;
+    width: 274px;
+    padding: 16px 3px;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    background-color: transparent;
+  }
+}
+p {
+  margin-bottom: 16px;
+  font-size: 21px;
+  line-height: 136%;
+}

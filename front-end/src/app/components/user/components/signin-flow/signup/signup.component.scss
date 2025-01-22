@@ -1,0 +1,66 @@
+@use "inputs";
+@use "colors";
+@use "flex";
+@use "fonts";
+@forward "../../../../../shared/components/error-validation/error-validation.component.scss";
+
+.signup {
+  margin: 120px auto 160px auto;
+  width: 570px;
+
+  &__title {
+    @include inputs.title;
+  }
+
+  &__form-wrap {
+    @include inputs.form-wrap;
+  }
+
+  &__form {
+    @include flex.flex-col-ac;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  &__input-wrap {
+    @include inputs.input-wrap;
+  }
+
+  &__input-icon {
+    @include inputs.input;
+    width: 506px;
+  }
+
+  &__input {
+    @include inputs.input;
+  }
+
+  &__section-adittion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 570px;
+  }
+
+  &__link {
+    @include fonts.primary-roboto(15px, 400, normal, 130%);
+    padding-top: 8px;
+    padding-bottom: 28px;
+    text-decoration: none;
+    text-decoration-line: underline;
+    color: colors.$gray-text;
+    cursor: pointer;
+  }
+}
+
+.or {
+  @include fonts.montserrat(18px, 400, normal, 130%);
+
+  text-align: center;
+  padding-bottom: 28px;
+  color: colors.$black;
+}
+
+.icon {
+  cursor: pointer;
+}

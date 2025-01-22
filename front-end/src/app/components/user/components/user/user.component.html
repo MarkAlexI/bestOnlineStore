@@ -1,0 +1,53 @@
+<section class="user">
+  <div class="wrapper">
+    <div class="user__path">
+      <a class="user__path-link" routerLink="/">Головна</a>/Профіль
+    </div>
+    <div class="user__title">Профіль</div>
+    <div class="user__main">
+      <nav class="user__nav">
+        <ul class="user__nav-items">
+          <li class="user__nav-item">
+            <a
+              class="user__nav-link link"
+              routerLink="/user"
+              routerLinkActive="link__active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Особиста інформація</a
+            >
+          </li>
+          <li class="user__nav-item">
+            <a
+              class="user__nav-link link"
+              routerLink="/user/orders"
+              routerLinkActive="link__active"
+              >Мої замовлення</a
+            >
+          </li>
+          <li class="user__nav-item">
+            <a
+              class="user__nav-link link"
+              routerLink="/user/reviews"
+              routerLinkActive="link__active"
+              >Мої відгуки</a
+            >
+          </li>
+          <li class="user__nav-item">
+            <a
+              class="user__nav-link link"
+              routerLink="/user/wishlist"
+              routerLinkActive="link__active"
+              >Список бажаного</a
+            >
+          </li>
+          <li class="user__nav-item">
+            <span class="user__nav-link link" (click)="signOut()">Вийти</span>
+          </li>
+        </ul>
+      </nav>
+      <div class="user__info">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</section>

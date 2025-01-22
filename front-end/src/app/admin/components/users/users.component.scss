@@ -1,0 +1,25 @@
+@use "colors";
+
+.users {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid colors.$gray;
+  gap: 12px;
+  overflow: hidden;
+  width: 20rem;
+  height: 10rem;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0.5rem 0.5rem colors.$gray;
+  }
+}

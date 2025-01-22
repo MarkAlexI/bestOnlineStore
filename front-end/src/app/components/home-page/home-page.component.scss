@@ -1,4 +1,4 @@
-@use "../../assets/styles/typography/fonts";
+@use "fonts";
 
 .name {
   display: flex;
@@ -16,32 +16,35 @@
   }
 }
 
-.top,
-.actions,
-.advices {
-  padding: 160px 0;
+.top__title {
+  @include fonts.montserrat(40px, 500, normal, 130%);
+
+  text-align: center;
+  color: #000;
 }
 
+.top,
+.new,
+.carousel,
+.actions,
+.advices {
+  padding: 80px 0;
+}
+.carousel {
+  padding-top: 0;
+}
+
+.top,
+.new,
+.actions,
+.advices,
 .top__btn {
   display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
 
 .btn__card {
-  margin-top: 64px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   width: 274px;
-  padding: 16px 32px;
-  gap: 10px;
-  border-radius: 8px;
-  border: 1px solid #000;
-  color: #000;
-  font-family: "Roboto";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 130%; /* 26px */
-  text-transform: uppercase;
-  background: transparent;
-  cursor: pointer;
 }

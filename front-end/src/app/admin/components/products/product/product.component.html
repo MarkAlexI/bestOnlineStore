@@ -1,0 +1,26 @@
+<section class="product">
+  <ng-container *ngIf="product$ | async as product">
+    <app-product-card class="product__card" [product]="product">
+    </app-product-card>
+    <div class="action">
+      <div
+        class="btn btn__add"
+        [routerLink]="['/admin/products/edit/', product._id]"
+      >
+        Редагувати
+      </div>
+      <div class="input-wrap">
+        <input
+          type="file"
+          (change)="uploadImage($event, product._id)"
+          #upload
+          [style.display]="'none'"
+        />
+        <button class="btn btn__add" (click)="upload.click()">Upload</button>
+      </div>
+      <div class="btn btn__add" routerLink="/admin/products">
+        Назад до продукції
+      </div>
+    </div>
+  </ng-container>
+</section>

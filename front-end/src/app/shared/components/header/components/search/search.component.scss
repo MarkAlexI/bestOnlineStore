@@ -1,0 +1,51 @@
+@use "colors";
+@use "fonts";
+
+.header__input {
+  display: flex;
+  padding: 8px 16px;
+  width: 418px;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid colors.$gray;
+}
+
+.input__search {
+  @include fonts.montserrat(20px, 400, normal, 130%);
+
+  border: none;
+  outline: none;
+  width: 80%;
+  flex-shrink: 0;
+  color: colors.$gray-active-input;
+  background: transparent;
+
+  &::placeholder {
+    color: colors.$input-text;
+  }
+}
+
+.btn__input__search {
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.search {
+  position: absolute;
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 15px;
+    position: relative;
+    background: colors.$white;
+  }
+
+  &__item {
+    cursor: pointer;
+  }
+}

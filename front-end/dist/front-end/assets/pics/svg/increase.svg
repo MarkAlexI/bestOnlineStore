@@ -1,0 +1,12 @@
+<svg
+                xmlns="http://www.w3.org/2000/svg"
+                id="increase"
+              >
+                <path
+                  d="M6.5 13.5H13M13 13.5H19.5M13 13.5V7M13 13.5V20"
+                  stroke="#676767"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>

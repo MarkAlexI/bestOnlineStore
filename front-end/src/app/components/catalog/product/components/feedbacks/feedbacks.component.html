@@ -1,0 +1,104 @@
+<section class="feedbacks wrapper">
+  <h3 class="feedbacks__title">Відгуки</h3>
+  <div class="feedbacks__add">
+    <p class="feedbacks__rating">
+      Рейтинг: 4.8 &#9734; &#9734; &#9734; &#9734; &#9734;
+    </p>
+    <p class="feedbacks__num">Всі відгуки: 235</p>
+    <div class="feedbacks__inputs">
+      <input
+        class="feedbacks__input-text"
+        type="text"
+        placeholder="Написати відгук"
+      />
+      <div class="feedbacks__input-file">
+        <input type="file" id="fileInput" class="feedbacks__file-input" />
+        <label for="fileInput" class="feedbacks__file-icon">
+          <app-icon
+            [path]="'attach'"
+            [size]="{ width: '29px', height: '27px' }"
+            [viewBox]="'0 0 29 27'"
+          ></app-icon>
+        </label>
+      </div>
+      <button class="feedbacks__see-all">надіслати</button>
+    </div>
+  </div>
+  <div class="feedbacks__container">
+    <div class="feedbacks__person">
+      <div class="feedbacks__person-info">
+        <span class="feedbacks__person-img"></span>
+        <div class="feedbacks__person-name">
+          <p>Наталі Портман</p>
+          <p>4.8 &#9734; &#9734; &#9734; &#9734; &#9734;</p>
+        </div>
+      </div>
+      <div class="feedbacks__data">
+        <p>19 серпня 2023 13:17</p>
+      </div>
+    </div>
+    <div class="feedbacks__photos">
+      <div class="feedbacks__photos-container">
+        <span class="feedbacks__photo"></span>
+        <span class="feedbacks__photo"></span>
+        <span class="feedbacks__photo"></span>
+      </div>
+      <a class="feedbacks__all-photo" href="">Переглянути всі фото</a>
+    </div>
+    <div class="feedbacks__text-container">
+      <p class="feedbacks__text">
+        Це крісло - справжній знахідка! Воно не тільки виглядає стильно та
+        сучасно в моєму інтер'єрі, але й надзвичайно зручне. Подушки м'які і
+        підтримують спину ідеально. Мені подобається можливість регулювання
+        нахилу спинки, це дозволяє знайти найкраще положення для роботи та
+        відпочинку.
+      </p>
+      <p class="feedbacks__text-title">Переваги:</p>
+      <p class="feedbacks__text">
+        Я вже маю це крісло деякий час і досі не виявив жодних ознак зносу.
+      </p>
+      <p class="feedbacks__text-title">Недоліки:</p>
+      <p class="feedbacks__text">
+        Що до недоліків, щось мені здається, що підлокітники могли б бути трохи
+        ширше. Але це дрібниця порівняно з усіма перевагами цього чудового
+        крісла.
+      </p>
+    </div>
+    <div class="feedbacks__buttons">
+      <div class="feedbacks__btn-answer">
+        <button>
+          Відповісти
+          <app-icon
+            [path]="'answer-arrow'"
+            [size]="{ width: '20px', height: '21px' }"
+            [viewBox]="'0 0 20 21'"
+          ></app-icon>
+        </button>
+        <a href="">Пожалітися</a>
+      </div>
+      <div class="feedbacks__likes">
+        <div class="feedbacks__like">
+          <app-icon
+            [path]="'feedback-like'"
+            [viewBox]="'0 0 32 32'"
+            [size]="{ width: '32px', height: '33px' }"
+            [fill]="'none'"
+          ></app-icon>
+
+          <span>125</span>
+        </div>
+        <div class="feedbacks__dislike">
+          <app-icon
+            [path]="'feedback-dislike'"
+            [viewBox]="'0 0 32 32'"
+            [size]="{ width: '32px', height: '33px' }"
+            [fill]="'none'"
+          ></app-icon>
+
+          <span>0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="feedbacks__see-all">всі відгуки</button>
+</section>

@@ -1,3 +1,20 @@
-<div class="carousel__image">
-  <img src="../../../../assets/pics/png/tmp/iconamoon_search-thin.png" alt="" />
+<div class="carousel" (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()">
+  <a (click)="prevSlide()" class="arrow arrow-left">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <path d="M30 36L18 24L30 12" stroke="#05020E" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <div class="slide-container">
+    <div class="slide" *ngFor="let photo of photos; let i = index" [ngClass]="{ 'active': i === slideIndex }">
+      <img [src]="photo.url" [alt]="photo.alt">
+    </div>
+  </div>
+  <a (click)="nextSlide()" class="arrow arrow-right">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <path d="M18 36L30 24L18 12" stroke="#05020E" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+<div class="dots">
+  <span class="dot" *ngFor="let photo of photos; let i = index" [ngClass]="{ 'active-dot': i === slideIndex }" (click)="goToSlide(i)"></span>
 </div>

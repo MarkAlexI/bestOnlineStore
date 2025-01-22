@@ -1,0 +1,7 @@
+<section class="path">
+  <ng-content></ng-content>
+  <span *ngFor="let path of paths" (click)="followIt(path.path)">
+    /{{ path.path }}
+  </span>
+  <ng-content select="[last]"></ng-content>
+</section>

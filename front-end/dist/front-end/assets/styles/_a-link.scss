@@ -1,0 +1,9 @@
+@use "fonts";
+@use "colors";
+
+@mixin path-link {
+  @include fonts.primary-roboto(20px, 400, normal, 130%);
+
+  text-decoration: none;
+  color: colors.$black;
+}

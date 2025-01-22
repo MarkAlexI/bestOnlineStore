@@ -1,3 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@use "./assets/styles/shared/shared";
-@use "./assets/styles/btn";
+@use "shared";
+@use "btn";
+@use "alerts";
+@use "colors";

@@ -1,11 +1,13 @@
+@use "colors";
+@use "fonts";
+
 .products {
   max-width: 1688px;
   margin: 0 auto;
 
   &__path {
     text-align: center;
-    color: #797979;
-    font-family: Roboto;
+    color: colors.$light-gray;
     font-size: 20px;
     font-weight: 400;
     line-height: 130%; /* 26px */
@@ -15,15 +17,10 @@
     padding: 52px 0 90px;
     text-align: center;
     color: #000;
-    font-family: Roboto;
     font-size: 40px;
     font-style: normal;
     font-weight: 500;
     line-height: 130%; /* 52px */
-  }
-
-  &__cards {
-
   }
 
   &__cards-sort,
@@ -34,7 +31,6 @@
     display: inline-block;
     text-decoration: none;
     color: #000;
-    font-family: Roboto;
     font-size: 26px;
     font-style: normal;
     font-weight: 400;
@@ -56,11 +52,11 @@
   }
 
   &__cards-sort:before {
-    background-image: url('../../../assets/pics/svg/ic_round-sort.svg');
+    background-image: url("../../../../assets/pics/svg/ic_round-sort.svg");
   }
 
   &__cards-filter:before {
-    background-image: url('../../../assets/pics/svg/mi_filter.svg');
+    background-image: url("../../../../assets/pics/svg/mi_filter.svg");
   }
 
   &__cards-filter {
@@ -72,32 +68,31 @@
     flex-wrap: wrap;
     gap: 80px;
   }
-  &__cards-sort {
-    position: relative;
-  }
+}
 
-  &__list-sort {
-    width: 240px;
-    list-style: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #F5F5F5;
-    padding: 20px 24px;
-    font-size: 18px;
-    z-index: 2;
+.nav {
+  &__page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 80px;
+    padding-top: 62px;
+    gap: 8px;
+    width: 100%;
 
-    li {
-      margin-bottom: 8px;
+    &-number {
+      @include fonts.primary-roboto(24px, 300, normal, 130%);
+
+      color: colors.$black;
+    }
+
+    &-arrow {
       cursor: pointer;
+    }
 
-      &:last-child {
-        margin-bottom: 0;
-      }
+    &-arrow-reverse {
+      cursor: pointer;
+      transform: rotate(180deg);
     }
   }
 }
-
-
-

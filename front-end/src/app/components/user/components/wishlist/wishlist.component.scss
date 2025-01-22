@@ -1,0 +1,17 @@
+@forward "../orders/orders.component.scss";
+
+.description {
+  width: 80%;
+}
+
+.delete {
+  text-align: right;
+  padding-top: 10%;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 122px;
+}

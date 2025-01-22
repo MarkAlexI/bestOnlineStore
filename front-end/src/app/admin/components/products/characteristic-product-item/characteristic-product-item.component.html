@@ -1,0 +1,42 @@
+<h2>Характеристики</h2>
+
+<form [formGroup]="productForm">
+  <div class="form__array" formArrayName="characteristics">
+    <div
+      class="form__array-group"
+      *ngFor="let item of characteristics.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'key')">
+        <input
+          type="text"
+          placeholder="Характеристика"
+          class="input"
+          formControlName="key"
+        />
+        <app-error-validation
+          [control]="productForm.get('key')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'value')">
+        <input
+          type="text"
+          placeholder="Значення"
+          class="input"
+          formControlName="value"
+        />
+        <app-error-validation
+          [control]="productForm.get('value')"
+        ></app-error-validation>
+      </div>
+      <div class="allimages__btn">
+        <button class="btn btn__add" type="button" (click)="addCharField()">
+          +
+        </button>
+        <button class="btn btn__add" type="button" (click)="deleteCharField(i)">
+          -
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

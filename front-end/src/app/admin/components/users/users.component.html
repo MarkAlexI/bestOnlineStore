@@ -1,0 +1,10 @@
+<section class="users">
+  <ng-container *ngFor="let user of users">
+    <app-user-card
+      class="user"
+      [user]="user"
+      (click)="userDetail(user._id)"
+    ></app-user-card>
+  </ng-container>
+</section>
+<router-outlet></router-outlet>

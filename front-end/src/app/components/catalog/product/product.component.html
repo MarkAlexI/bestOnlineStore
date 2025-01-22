@@ -1,1 +1,11 @@
-<p>product works!</p>
+<ng-container *ngIf="product$ | async as product">
+  <app-path>
+    <span>Каталог</span>
+    <span last>/{{ product.name }}</span>
+  </app-path>
+
+  <app-about-product [product]="product" />
+  <app-features [product]="product" />
+  <app-feedbacks />
+  <app-similar-products [product]="product" />
+</ng-container>

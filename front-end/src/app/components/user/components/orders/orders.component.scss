@@ -1,0 +1,67 @@
+@use "text";
+@use "fonts";
+@use "colors";
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  width: 829px;
+
+  &__title {
+    @include text.user-title;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  &__item-img {
+    width: 170px;
+    height: 122px;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 55px;
+    width: 639px;
+    height: 122px;
+  }
+
+  &__item-text {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.description,
+.action {
+  @include fonts.primary-roboto(18px, 400, normal, 130%);
+}
+
+.action {
+  cursor: pointer;
+  text-decoration-line: underline;
+}
+
+.state {
+  @include fonts.primary-roboto(18px, 500, normal, 130%);
+}
+
+.price {
+  @include fonts.primary-roboto(20px, 400, normal, 130%);
+}
+
+.discount {
+  @include fonts.primary-roboto(14px, 400, normal, 130%);
+
+  text-decoration-line: line-through;
+  color: colors.$sale-color;
+}

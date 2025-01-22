@@ -1,0 +1,31 @@
+<div class="orders">
+  <div class="orders__title">Список бажаного</div>
+
+  <div class="orders__items" *ngFor="let wish of wishlists">
+    <img
+      [src]="wish.baseImage"
+      class="orders__item-img"
+      [alt]="wish.descr"
+      [appEnPath]="wish"
+    />
+
+    <div class="orders__item">
+      <div class="orders__item-text">
+        <div class="description">
+          {{ wish.descr }}
+        </div>
+        <div class="price">
+          <p>{{ wish.price | transformPrice }}</p>
+          <p class="discount">{{ wish?.discount | transformPrice }}</p>
+          <p class="delete" (click)="delete(wish._id)">
+            <app-icon
+              [path]="'delete'"
+              [size]="{ width: '24px', height: '25px' }"
+              [viewBox]="'0 0 24 25'"
+            ></app-icon>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

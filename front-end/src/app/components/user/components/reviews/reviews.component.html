@@ -1,0 +1,75 @@
+<div class="review">
+  <div class="review__title">Мої відгуки</div>
+  <div class="review__card" *ngFor="let review of reviews">
+    <div class="review__wrap-data">
+      <div class="reviewer__data">
+        <p class="reviewer__name">
+          {{ review.title }}
+        </p>
+        <div class="reviewer__rate">
+          {{ review.rate }}
+          <div class="stars">
+            <div class="star" *ngFor="let i of [1, 2, 3, 4, 5]; index as idx">
+              <app-icon
+                [path]="'star'"
+                [size]="{ width: '32px', height: '32px' }"
+                [viewBox]="'0 0 32 32'"
+                [i]="idx"
+                [rating]="review.rate"
+              >
+              </app-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review__date">
+        {{ review.date }}
+      </div>
+    </div>
+    <div class="review-images">
+      <div *ngFor="let image of review.images">
+        <img [src]="image" class="review-image" alt="" />
+      </div>
+      <div class="review__btn-text btn">Переглянути більше</div>
+    </div>
+    <div class="review__text">
+      <div class="text">
+        {{ review.text }}
+      </div>
+      <div class="advantage">
+        <p>Переваги:</p>
+        {{ review.advantage }}
+      </div>
+      <div class="disadvantage">
+        <p>Недоліки:</p>
+        {{ review.disadvantage }}
+      </div>
+      <div class="review__footer">
+        <div class="rating">
+          <div class="rating__likes">
+            <app-icon
+              [path]="'feedback-like'"
+              [size]="{ width: '32px', height: '32px' }"
+              [viewBox]="'0 0 32 32'"
+            ></app-icon>
+
+            <span> {{ review.likes }} </span>
+          </div>
+          <div class="rating__likes">
+            <app-icon
+              [path]="'feedback-dislike'"
+              [size]="{ width: '32px', height: '32px' }"
+              [viewBox]="'0 0 32 32'"
+            ></app-icon>
+
+            <span>{{ review.dislikes }}</span>
+          </div>
+        </div>
+        <div class="review__footer-actions">
+          <div class="btn">Перейти до товару</div>
+          <div class="btn">Видалити</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

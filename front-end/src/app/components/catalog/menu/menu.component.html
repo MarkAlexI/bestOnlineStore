@@ -1,0 +1,43 @@
+<section class="categories">
+  <div class="categories__container">
+    <ul class="categories__menu-side">
+      <li
+        *ngFor="let category of categories"
+        (mouseenter)="showSubcategories(category)"
+        (mouseleave)="hideSubcategories()"
+      >
+        <a
+          class="categories__menu-title"
+          (mouseenter)="showImg(category.srcImg)"
+          [routerLink]="[
+            '/catalog/',
+            category.subcategories ? null : category.routerLink
+          ]"
+          >{{ category.name }}</a
+        >
+        <ul class="categories__menu-links" *ngIf="category.showSubcategories">
+          <li *ngFor="let subcategory of category.subcategories">
+            <a
+              class="categories__menu-subtitle"
+              (mouseenter)="showImg(subcategory.srcImg)"
+              [routerLink]="[
+                '/catalog/',
+                category.routerLink,
+                subcategory.routerLink
+              ]"
+            >
+              {{ subcategory.name }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="categories__image"
+    [ngStyle]="{
+      'background-image':
+        'url(' + (currentCategory || categories[0].srcImg) + ')'
+    }"
+  ></div>
+</section>

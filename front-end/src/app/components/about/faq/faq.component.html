@@ -1,0 +1,21 @@
+<section class="wrap">
+  <div class="path"><span>Головна</span><span>/FAQ</span></div>
+  <h1 class="title">FAQ</h1>
+  <div class="accordion">
+    <dl *ngFor="let item of faq; index as i" class="accordion__item">
+      <span
+        (click)="toggle(i)"
+        [@rotateItem]="isRotate(i) ? 'rotate' : 'rotated'"
+      >
+        <img [src]="svg.shiftRight" alt="roll up" />
+      </span>
+      <dt class="accordion__header" (click)="toggle(i)">{{ item.title }}</dt>
+      <dd
+        class="accordion__text"
+        [@expandItem]="isExpanded(i) ? 'expanded' : 'collapsed'"
+      >
+        {{ item.text }}
+      </dd>
+    </dl>
+  </div>
+</section>

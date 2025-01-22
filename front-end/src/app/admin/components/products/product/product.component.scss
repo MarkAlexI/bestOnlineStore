@@ -1,0 +1,31 @@
+@use "a-link";
+@use "colors";
+
+.link {
+  @include a-link.path-link;
+
+  padding: 5px;
+  color: colors.$black;
+
+  &:hover {
+    border-radius: none;
+    border-top: 2px solid colors.$black;
+    border-bottom: 2px solid colors.$black;
+  }
+}
+
+.action {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2rem;
+  width: 50%;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 4rem;
+}

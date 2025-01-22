@@ -1,0 +1,85 @@
+<section class="product">
+  <div class="product__content">
+    <div class="product__images">
+      <div class="product__main-image">
+        <span *ngIf="product.discount" class="product__sale">Акція</span>
+        <img
+          class="product__image"
+          width="719"
+          height="771"
+          *ngIf="product.baseImage"
+          alt="{{ product.name }}"
+          [ngSrc]="product.baseImage"
+        />
+      </div>
+      <div class="product__sub-image" *ngIf="product.allImages">
+        <img
+          class="product__image"
+          width="273"
+          height="241"
+          *ngFor="let image of product.allImages"
+          alt="{{ product.name }}"
+          [ngSrc]="image"
+        />
+      </div>
+    </div>
+    <div class="product__main-info">
+      <h3 class="product__title">{{ product.name }}</h3>
+      <p class="product__stock" *ngIf="product.instock">
+        <span class="product__bold">В наявності</span>
+      </p>
+      <p class="product__maker">
+        <span class="product__bold">Виробник:</span> {{ product.brand }}
+      </p>
+      <p class="product__model">
+        <span class="product__bold">Модель: </span>{{ product.shortDescr }}
+      </p>
+      <p class="product__guarantee">
+        <span class="product__bold">Гарантія: </span>12 місяців
+      </p>
+      <p class="product__color">
+        <span class="product__bold">Колір:</span> Light
+      </p>
+      <div class="product__colors">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="product__descr">
+        <span class="product__bold">Опис товару: </span>{{ product.descr }}
+      </p>
+      <div class="product__prices">
+        <span *ngIf="product.price" class="product__sale-price">{{
+          product.price | transformPrice
+        }}</span>
+        <span
+          class="product__price"
+          *ngIf="product.discount"
+          [ngClass]="{ 'product__crossed-price': product.discount }"
+          >{{ product.discount | transformPrice }}</span
+        >
+      </div>
+      <div class="product__buttons">
+        <button class="product__buy" (click)="addToCart(product._id!, 1)">
+          Купити
+
+          <app-icon
+            [path]="'basket'"
+            [size]="{ width: '32px', height: '32px' }"
+            [viewBox]="'0 0 32 32'"
+            [fill]="'none'"
+          ></app-icon>
+        </button>
+        <button class="product__select" (click)="addToWishList(product._id)">
+          Додати в обране
+          <app-icon
+            [path]="'add-favorite'"
+            [size]="{ width: '32px', height: '32px' }"
+            [viewBox]="'0 0 32 32'"
+            [fill]="'none'"
+          ></app-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,54 @@
+@import "colors";
+
+.categories {
+  display: flex;
+  height: calc(100vh);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  &__container {
+    padding: 310px 80px 0;
+    width: 40%;
+    background-color: #272727;
+  }
+
+  &__image {
+    width: 60%;
+    background-color: $main-color;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all .5s ease-in-out;
+  }
+
+  &__menu-title {
+    width: 100%;
+    text-decoration: none;
+    color: #FAFAFA;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    padding: 16px 0;
+    cursor: pointer;
+
+    &:hover {
+      font-weight: 500;
+    }
+  }
+
+  &__menu-subtitle {
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    color: #FAFAFA;
+    text-decoration: none;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    padding: 6px 0;
+  }
+}

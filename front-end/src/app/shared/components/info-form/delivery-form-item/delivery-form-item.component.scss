@@ -1,0 +1,151 @@
+@use "fonts";
+@use "colors";
+@use "a-link";
+@use "inputs";
+@use "text";
+@use "btn";
+@forward "../../error-validation/error-validation.component.scss";
+@forward "custom-checkbox";
+
+.delivery {
+  display: inline-flex;
+  padding-right: 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 51px;
+  padding-top: 120px;
+  width: 829px;
+
+  &__title {
+    @include fonts.primary-roboto(28px, 400, normal, 130%);
+
+    width: 100%;
+    text-align: center;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 56px;
+  }
+
+  &__options-select {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+    margin-top: 32px;
+    margin-left: 72px;
+    width: 332px;
+    padding: 12px 16px;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid colors.$gray;
+
+    .select {
+      @include fonts.primary-roboto(18px, 400, normal, 130%);
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      outline: none;
+      border: none;
+      background: transparent;
+      color: #6a6a6a;
+    }
+  }
+
+  &__options-btn {
+    display: flex;
+    align-items: center;
+    width: 757px;
+    padding: 16px;
+    margin-left: 72px;
+    gap: 10px;
+    border-radius: 8px;
+    background: #efeeee;
+
+    span {
+      @include fonts.primary-roboto(16px, 400, normal, 130%);
+    }
+  }
+
+
+
+  &__btn {
+    @include fonts.primary-roboto(18px, 300, normal, 130%);
+
+    text-transform: none;
+  }
+}
+
+.delivery__options-checkbox label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logo-company {
+  padding-left: 48px;
+  padding-right: 24px;
+}
+
+.text-company {
+  @include fonts.primary-roboto(20px, 400, normal, 130%);
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.input-select {
+  @include inputs.input;
+  @include fonts.primary-roboto(18px, 400, normal, 130%);
+
+  color: #6a6a6a;
+}
+
+.list {
+  position: relative;
+  border: 1px solid #4c4c4c;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: none;
+  border-top-left-radius: none;
+  background: #fff;
+}
+
+.department__list {
+  @extend .list;
+  z-index: 100;
+  &-item {
+    position: relative;
+    border-radius: 8px;
+    padding: 0 20px 10px 10px;
+    cursor: pointer;
+    &:hover {
+      background: #efeeee;
+    }
+  }
+
+  &-items {
+    display: block;
+    position: absolute;
+    list-style: none;
+    border: 1px solid #000;
+    border-top: none;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    top: 30px;
+    left: -311px;
+    width: 330px;
+    overflow-y: auto;
+    max-height: 50vh;
+    background: #fff;
+    z-index: 100;
+  }
+}

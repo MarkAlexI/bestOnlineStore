@@ -1,7 +1,6 @@
+@import "colors";
+
 .top {
-  //padding-bottom: 160px;
-  //margin: 160px auto;
-  //height: 744px;
   padding: 80px 0;
 
   &__box {
@@ -9,41 +8,9 @@
     flex-direction: column;
     justify-content: center;
   }
-
-  &__title {
-    text-align: center;
-    margin-bottom: 100px;
-    font-family: "Roboto";
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 130%;
-    color: #000;
-  }
 }
 
 .card {
-  &__image {
-    width: 360px;
-    height: 360px;
-    background: rgba(128, 128, 128, 0.5);
-  }
-
-  &__disc {
-    display: inline-flex;
-    padding: 8px 12px;
-    justify-content: center;
-    align-items: center;
-    margin-left: 284px;
-    font-family: "Roboto";
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 130%;
-    background: #4b4b4b;
-    color: #fff;
-  }
-
   &__wrap {
     display: flex;
     justify-content: space-between;
@@ -53,7 +20,6 @@
   &__title {
     margin-top: 32px;
     text-align: center;
-    font-family: "Roboto";
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -63,7 +29,6 @@
 
   &__price {
     text-align: center;
-    font-family: "Roboto";
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -73,7 +38,7 @@
 
   &__price__discount {
     text-align: center;
-    font-family: "Roboto";
+
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

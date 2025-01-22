@@ -1,0 +1,46 @@
+@use "fonts";
+@use "colors";
+@use "a-link";
+@use "inputs";
+@use "text";
+@use "btn";
+@forward "../error-validation/error-validation.component.scss";
+@forward "custom-checkbox";
+
+.user {
+  &__info-title {
+    @include text.user-title;
+
+    padding-bottom: 72px;
+  }
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
+    width: 837px;
+  }
+}
+.list {
+  position: relative;
+  border: 1px solid #4c4c4c;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: none;
+  border-top-left-radius: none;
+  background: #fff;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.delivery__actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 80px;
+  padding-top: 80px;
+}

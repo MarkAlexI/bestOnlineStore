@@ -1,0 +1,42 @@
+@use "fonts";
+@use "colors";
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include fonts.font-montserrat;
+}
+
+.wrapper {
+  max-width: 1462px;
+  margin: 0 auto;
+}
+
+button {
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  display: inline-block;
+}
+
+.path {
+  text-align: center;
+  color: colors.$light-gray;
+  font-size: 20px;
+}
+
+ul {
+  list-style: none;
+}
+
+app-icon {
+  cursor: pointer;
+}

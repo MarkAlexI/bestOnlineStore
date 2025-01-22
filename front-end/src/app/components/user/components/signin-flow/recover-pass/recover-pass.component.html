@@ -1,0 +1,52 @@
+<div class="recover">
+  <div class="recover__wrap" *ngIf="notSend; else send">
+    <p>Для відновлення паролю введіть e-mail</p>
+    <form
+      class="recover__form"
+      [formGroup]="recoverPassForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form__container">
+        <div class="input__wrap" [ngClass]="isValid(recoverPassForm, 'email')">
+          <input
+            class="recover__input"
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="E-mail*"
+          />
+          <app-error-validation
+            [control]="recoverPassForm.get('email')"
+          ></app-error-validation>
+        </div>
+      </div>
+
+      <div class="action">
+        <div>
+          <button
+            class="btn btn__buy"
+            type="submit"
+            [disabled]="!recoverPassForm.valid"
+          >
+            Відновити
+          </button>
+        </div>
+        <div>
+          <button class="btn btn__add" type="button" (click)="cancel()">
+            Скасувати
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template #send>
+    <div class="recover__form recover__wrap">
+      <div>
+        <p>{{ recoverPass$ | async }}</p>
+      </div>
+      <div>
+        <button class="btn" type="button" (click)="cancel()">Закрити</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

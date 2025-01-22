@@ -1,0 +1,70 @@
+@import "colors";
+
+.product-card {
+  position: relative;
+  width: 360px;
+  text-align: center;
+  line-height: 130%;
+  cursor: pointer;
+
+  &__action {
+    color: white;
+    padding: 8px 12px;
+    background-color: $sale-color;
+    position: absolute;
+  }
+
+  &__like {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    .like,
+    .like-hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .like-hover {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover .like-hover {
+      opacity: 1;
+    }
+  }
+
+  &__image,
+  &__placeholder {
+    width: 360px;
+    height: 360px;
+    object-fit: contain;
+    background-color: $main-color;
+    margin-bottom: 32px;
+  }
+
+  &__name {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  &__sale {
+    font-size: 20px;
+  }
+
+  &__price {
+    font-size: 20px;
+  }
+
+  &__crossed-price {
+    color: $sale-color;
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+}

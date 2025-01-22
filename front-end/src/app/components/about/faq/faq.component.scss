@@ -1,0 +1,50 @@
+@use "fonts";
+@use "colors";
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 1292px;
+  margin: 0 auto;
+}
+
+.title {
+  @include fonts.montserrat(40px, 400, normal, 130%);
+
+  padding-top: 32px;
+  padding-bottom: 88px;
+  width: 100%;
+  text-align: center;
+  color: colors.$black;
+}
+
+.accordion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  align-content: flex-end;
+  width: 100%;
+
+  &__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    min-height: 80px;
+    padding: 20px;
+
+    flex-shrink: 0;
+    border: 1px solid var(--gray, #949494);
+
+    span {
+      margin-right: 32px;
+      cursor: pointer;
+    }
+  }
+
+  &__header {
+    cursor: pointer;
+  }
+}

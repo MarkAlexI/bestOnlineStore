@@ -1,0 +1,93 @@
+<ng-container *ngIf="isComplete; else complete">
+  <ng-container *ngIf="orders?.length; else isOrders">
+    <div class="cart__order" *ngFor="let order of orders; index as id">
+      <div class="cart__order-img">
+        <img [src]="order.image" alt="" />
+      </div>
+      <div class="cart__order-text">
+        <div class="cart__order-description">
+          <div class="text">{{ order.name }}</div>
+          <div class="btn-delete" (click)="delete(order.product)">
+            <app-icon
+              [path]="'delete'"
+              [size]="{ width: '24', height: '25' }"
+              [viewBox]="'0 0 24 25'"
+            ></app-icon>
+          </div>
+        </div>
+        <div class="cart__order-data">
+          <div class="cart__order-amount">
+            <span
+              class="decrease"
+              (click)="decrease(order.product, +quantity.value)"
+            >
+              <app-icon
+                [path]="'minus'"
+                [size]="{ width: '26px', height: '27px' }"
+                [viewBox]="'0 0 26 27'"
+                [fill]="'none'"
+              ></app-icon>
+            </span>
+            <input
+              #quantity
+              type="number"
+              [min]="minQuantity"
+              [max]="maxQuantity"
+              [(ngModel)]="order.quantity"
+              class="cart__input"
+              disabled
+            />
+            <span
+              class="increase"
+              (click)="increase(order.product, +quantity.value)"
+            >
+              <app-icon
+                [path]="'increase'"
+                [size]="{ width: '26px', height: '27px' }"
+                [viewBox]="'0 0 26 27'"
+                [fill]="'none'"
+              ></app-icon>
+            </span>
+          </div>
+          <div class="cart__order-price">
+            <p class="text" #price>
+              {{ order.price | transformPrice }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cart__order-total">
+      <p>Загальна сума: {{ total | transformPrice }}</p>
+    </div>
+    <div class="cart__order-actions">
+      <button class="btn btn__add" type="button" (click)="close()">
+        Продовжити покупки
+      </button>
+      <button class="btn btn__buy" type="button" (click)="completeOrder()">
+        Оформити замовлення
+      </button>
+    </div>
+  </ng-container>
+  <ng-template #isOrders>
+    <div class="noorders">
+      <div>
+        <img src="./assets/pics/png/bascket.png" alt="" />
+      </div>
+      <p class="text-empty">Ваш кошик ще порожній</p>
+
+      <a class="text-link" [routerLink]="['/catalog']">Розпочати покупки</a>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #complete>
+  <app-info-form class="info__form" [isCart]="isCart">
+    <button class="btn btn__buy" type="button" (click)="backToCart()">
+      Назад
+    </button>
+    <button class="btn btn__buy" type="submit" [disabled]="!isValid">
+      Замовити
+    </button>
+  </app-info-form>
+</ng-template>

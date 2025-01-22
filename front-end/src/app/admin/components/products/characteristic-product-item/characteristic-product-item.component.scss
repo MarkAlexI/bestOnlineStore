@@ -1,0 +1,14 @@
+@forward "../edit-product-item//edit-product-item.component.scss";
+
+.form__array {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+  &-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

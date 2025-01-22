@@ -1,0 +1,69 @@
+<div class="header__logo">
+  <a routerLink="/" class="header__logo__text">
+    <app-logo></app-logo>
+  </a>
+</div>
+<div class="header__nav">
+  <div class="header__search">
+    <app-search></app-search>
+  </div>
+  <nav class="nav">
+    <div class="nav__links">
+      <a
+        class="nav__link"
+        routerLink="/"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Головна</a
+      >
+      <a class="nav__link" routerLink="/catalog" routerLinkActive="active-link"
+        >Каталог</a
+      >
+      <a class="nav__link" routerLink="/sales" routerLinkActive="active-link"
+        >Акції</a
+      >
+      <a class="nav__link" routerLink="/blog" routerLinkActive="active-link"
+        >Блог</a
+      >
+      <a class="nav__link" routerLink="/about" routerLinkActive="active-link"
+        >Про нас</a
+      >
+    </div>
+
+    <div class="nav__icon">
+      <span class="nav__icon_cart">
+        <a
+          class="nav__icon__link"
+          [routerLink]="[{ outlets: { cart: ['cart'] } }]"
+        >
+          <app-icon
+            [path]="'cart'"
+            [size]="{ width: '32px', height: '32px' }"
+            [viewBox]="'0 0 32 32'"
+            [fill]="'none'"
+          ></app-icon>
+        </a>
+      </span>
+      <span class="nav__icon_heart">
+        <a class="nav__icon_link" routerLink="/user/wishlist">
+          <app-icon
+            [path]="'heart'"
+            [size]="{ width: '32px', height: '32px' }"
+            [viewBox]="'0 0 32 32'"
+          ></app-icon>
+        </a>
+      </span>
+      <!-- when hover drop down menu will be done soon-->
+      <span class="nav__icon_user">
+        <a class="nav__icon__link" routerLink="/user">
+          <app-icon
+            [path]="'user'"
+            [size]="{ width: '32px', height: '32px' }"
+            [viewBox]="'0 0 32 32'"
+          >
+          </app-icon>
+        </a>
+      </span>
+    </div>
+  </nav>
+</div>

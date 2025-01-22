@@ -1,0 +1,13 @@
+<div class="">
+  <app-info-form>
+    <button class="btn btn__add" type="submit" [disabled]="!infoForm">
+      Зберегти зміни
+    </button>
+    <button class="btn btn__add" type="button" (click)="cancel()">
+      Скасувати всі зміни
+    </button>
+  </app-info-form>
+</div>
+<div class="contactus" (click)="redirectToContact()">
+  <app-contact-us></app-contact-us>
+</div>

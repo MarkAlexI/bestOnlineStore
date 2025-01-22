@@ -1,0 +1,39 @@
+@use "colors";
+@use "fonts";
+@use "flex";
+
+@mixin input-wrap {
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid colors.$gray;
+}
+
+@mixin input {
+  // padding: 16px 12px;
+  width: 536px;
+  height: 29px;
+  border: none;
+  outline: none;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+
+  &::placeholder {
+    color: colors.$gray;
+  }
+}
+
+@mixin form-wrap {
+  @include flex.flex-col-ac;
+  height: auto;
+}
+
+@mixin title {
+  @include fonts.montserrat(40px, 500, normal, 130%);
+  padding-bottom: 60px;
+}

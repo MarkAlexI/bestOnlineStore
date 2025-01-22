@@ -1,33 +1,39 @@
-<section class="name wrapper">
-  <p class="name__shop">Name Shop</p>
-</section>
-<section class="carousel wrapper">
-  <app-carousel></app-carousel>
-</section>
-<section class="top wrapper">
-  <app-card [mockData]="mockDataTop" class="top__box"> </app-card>
-  <div class="top__btn">
-    <button class="btn__card" (click)="redirect('/catalog')">
-      ПЕРЕЙТИ В КАТАЛОГ
-    </button>
-  </div>
-</section>
-<section class="new wrapper">
-  <app-card class="new__box" [mockData]="mockDataNew"></app-card>
-  <div class="top__btn">
-    <button class="btn__card" (click)="redirect('/catalog', { filter: 'new' })">
-      переглянути всі
-    </button>
-  </div>
-</section>
-<section class="actions wrapper">
-  <app-card class="actions__box" [mockData]="mockDataActions"></app-card>
-  <div class="top__btn">
-    <button class="btn__card" (click)="redirect('/sales')">
-      переглянути всі
-    </button>
-  </div>
-</section>
-<section class="advices wrapper">
-  <app-advices class="advices__box"></app-advices>
-</section>
+<ng-container *ngIf="products?.length; else loading">
+  <section class="carousel wrapper">
+    <app-carousel></app-carousel>
+  </section>
+  <section class="top wrapper">
+    <div class="top__title">Популярне</div>
+    <app-card class="top__box" [product]="products"></app-card>
+    <div class="top__btn">
+      <button class="btn btn__add btn__card" (click)="redirect('/catalog')">
+        ПЕРЕЙТИ В КАТАЛОГ
+      </button>
+    </div>
+  </section>
+  <section class="new wrapper">
+    <div class="top__title">Новинки</div>
+    <app-card class="new__box" [product]="products"></app-card>
+    <div class="top__btn">
+      <button class="btn btn__add btn__card" (click)="redirect('/catalog')">
+        переглянути всі
+      </button>
+    </div>
+  </section>
+  <section class="actions wrapper">
+    <div class="top__title">Акції</div>
+    <app-card class="actions__box" [product]="products"></app-card>
+    <div class="top__btn">
+      <button class="btn btn__add btn__card" (click)="redirect('/sales')">
+        переглянути всі
+      </button>
+    </div>
+  </section>
+  <section class="advices wrapper">
+    <app-advices class="advices__box"></app-advices>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="wrapper">Loading...</div>
+</ng-template>

@@ -1,0 +1,39 @@
+@use "inputs";
+
+.form-wrap {
+  @include inputs.form-wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  gap: 2rem;
+}
+.input-wrap {
+  @include inputs.input-wrap;
+}
+
+.input {
+  @include inputs.input;
+}
+
+.action {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+app-error-validation {
+  position: absolute;
+}
+
+.allimages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  &__btn {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding-top: 24px;
+  }
+}

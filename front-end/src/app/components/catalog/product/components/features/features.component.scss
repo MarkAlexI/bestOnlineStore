@@ -1,0 +1,25 @@
+.features {
+  padding: 80px 0;
+
+  &__title {
+    margin-bottom: 45px;
+    font-size: 32px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  &__table {
+    width: 100%;
+    font-size: 22px;
+  }
+
+  &__name,
+  &__descr {
+    padding: 28px 0;
+  }
+
+  &__name {
+    width: 30%;
+    font-weight: 500;
+  }
+}

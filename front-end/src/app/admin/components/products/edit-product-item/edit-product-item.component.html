@@ -1,0 +1,168 @@
+<div class="wraper">
+  <div class="add-product__content">
+    <h1>Редагувати</h1>
+    <form
+      class="form-wrap"
+      [formGroup]="productForm"
+      (change)="validFormService.isValid(productForm.valid)"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'name')">
+        <input
+          class="input"
+          type="text"
+          placeholder="Назва товару"
+          formControlName="name"
+        />
+        <app-error-validation
+          [control]="productForm.get('name')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'brand')">
+        <input
+          class="input"
+          type="text"
+          placeholder="Торгова марка (Бренд)"
+          formControlName="brand"
+        />
+        <app-error-validation
+          [control]="productForm.get('brand')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'category')">
+        <select
+          class="input"
+          formControlName="category"
+          (change)="setUpSubcategory()"
+        >
+          <option [value]="category" *ngFor="let category of categories">
+            {{ category }}
+          </option>
+        </select>
+        <app-error-validation
+          [control]="productForm.get('category')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'subcategory')">
+        <select class="input" formControlName="subcategory">
+          <option
+            [value]="subcategory"
+            *ngFor="let subcategory of subcategories"
+          >
+            {{ subcategory }}
+          </option>
+        </select>
+        <app-error-validation
+          [control]="productForm.get('subcategory')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'price')">
+        <input
+          class="input"
+          type="number"
+          placeholder="Ціна"
+          formControlName="price"
+          min="0"
+        />
+        <app-error-validation
+          [control]="productForm.get('price')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'discount')">
+        <input
+          class="input"
+          type="number"
+          placeholder="Знижка"
+          formControlName="discount"
+          min="0"
+        />
+        <app-error-validation
+          [control]="productForm.get('discount')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap">
+        <select class="input" formControlName="instock">
+          <option value="false">False</option>
+          <option value="true" selected>True</option>
+        </select>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'countInStock')">
+        <input
+          class="input"
+          type="number"
+          placeholder="Кількість на складі"
+          formControlName="countInStock"
+          min="0"
+        />
+        <app-error-validation
+          [control]="productForm.get('countInStock')"
+        ></app-error-validation>
+      </div>
+      <div class="input-wrap" [ngClass]="isValid(productForm, 'shortDescr')">
+        <input
+          class="input"
+          type="text"
+          placeholder="Модель"
+          formControlName="shortDescr"
+        />
+        <app-error-validation
+          [control]="productForm.get('shortDescr')"
+        ></app-error-validation>
+      </div>
+
+      <textarea
+        name="description"
+        id=""
+        cols="30"
+        rows="10"
+        placeholder="Опис товару"
+        formControlName="descr"
+      ></textarea>
+
+      <div class="input-wrap" *ngIf="!isCreate">
+        <input
+          type="text"
+          placeholder="Основне зображення"
+          class="input"
+          formControlName="baseImage"
+        />
+      </div>
+
+      <div class="allimages" formArrayName="allImages" *ngIf="!isCreate">
+        <div *ngFor="let item of allImages.controls; let i = index">
+          <div class="input-wrap">
+            <input
+              type="text"
+              placeholder="Додаткові зображення"
+              class="input"
+              [formControlName]="i"
+            />
+          </div>
+          <div class="allimages__btn">
+            <button
+              class="btn btn__add"
+              type="button"
+              (click)="addImageField()"
+            >
+              +
+            </button>
+            <button
+              class="btn btn__add"
+              type="button"
+              (click)="deleteImageField(i)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+      </div>
+      <app-characteristic-product-item
+        [productForm]="productForm"
+        [characteristics]="characteristics"
+      ></app-characteristic-product-item>
+      <div class="action">
+        <ng-content></ng-content>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@use "inputs";
+
+.form-wrap {
+  @include inputs.form-wrap;
+
+  gap: 2rem;
+}
+.input-wrap {
+  @include inputs.input-wrap;
+}
+
+.input {
+  @include inputs.input;
+}

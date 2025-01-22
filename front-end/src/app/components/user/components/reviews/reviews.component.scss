@@ -1,0 +1,141 @@
+@use "text";
+@use "colors";
+@use "fonts";
+@forward "btn";
+
+.review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    @include text.user-title;
+    padding-bottom: 60px;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    width: 901px;
+    gap: 24px;
+    border-radius: 8px;
+    border: 1px solid #949494;
+  }
+
+  &__date {
+    @include fonts.primary-roboto(22px, 400, normal, 130%);
+  }
+
+  &__wrap-data {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px 8px 24px;
+  }
+
+  &-image {
+    width: 162px;
+    height: 162px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  &-images {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  &__text {
+    @include fonts.primary-roboto(22px, 400, normal, 130%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0 24px;
+    width: 821px;
+
+    p {
+      @include fonts.primary-roboto(22px, 500, normal, 130%);
+    }
+  }
+
+  &__btn-text {
+
+    text-align: center;
+    color: colors.$black;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 819px;
+    padding: 48px 24px 0 24px;
+  }
+
+  &__footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    div {
+
+      color: colors.$black;
+    }
+  }
+}
+
+.reviewer {
+  &__name {
+    @include fonts.primary-roboto(22px, 500, normal, 130%);
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  &__rate {
+    @include fonts.primary-roboto(22px, 400, normal, 130%);
+
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    .stars {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+    }
+  }
+}
+
+.advantage,
+.disadvantage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.rating {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+
+  &__likes {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+
+    span {
+      @include fonts.primary-roboto(22px, 400, normal, 130%);
+    }
+  }
+}

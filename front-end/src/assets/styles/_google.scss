@@ -1,0 +1,22 @@
+@use "fonts";
+
+.google {
+  @include fonts.primary-roboto(18px, 400, normal, 130%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid #010101;
+  width: 274px;
+  padding: 8px;
+  gap: 8px;
+  cursor: pointer;
+
+  &-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}

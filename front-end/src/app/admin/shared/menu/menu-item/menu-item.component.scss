@@ -1,0 +1,14 @@
+.menu {
+  &__root {
+    display: inline-block;
+  }
+
+  &__leave {
+    display: inline-block;
+    margin-left: 1px;
+  }
+}
+
+.submenu {
+  margin: 2px;
+}

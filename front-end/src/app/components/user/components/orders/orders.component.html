@@ -1,0 +1,24 @@
+<div class="orders">
+  <div class="orders__title">Мої замовлення</div>
+  <div class="orders__items" *ngFor="let order of orders">
+    <img [src]="order.image" class="orders__item-img" />
+
+    <div class="orders__item">
+      <div class="orders__item-text">
+        <div class="description">
+          {{ order.description }}
+        </div>
+        <div class="price">
+          <p>{{ order.itemsPrice | transformPrice }}</p>
+          <p class="discount">{{ order?.discount | transformPrice }}</p>
+        </div>
+      </div>
+      <div class="orders__item-text">
+        <div class="state">Статус: {{ order.status }}</div>
+        <div class="action" (click)="completeAction(order._id)">
+          {{ order.isPaid ? "Повернути" : "Скасувати" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

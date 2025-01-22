@@ -1,0 +1,10 @@
+<section class="product">
+  <ng-container *ngFor="let product of products">
+    <app-product-card
+      class="product__card"
+      [product]="product"
+      [routerLink]="['/admin/products/product', product._id]"
+    ></app-product-card>
+  </ng-container>
+</section>
+<router-outlet></router-outlet>

@@ -1,0 +1,109 @@
+<form [formGroup]="infoForm">
+  <div class="delivery">
+    <div class="delivery__title">Способи доставки</div>
+    <div class="delivery__options">
+      <div class="delivery__options-checkbox">
+        <label for="novaposhta">
+          <input
+            type="radio"
+            name="deliveryMethod"
+            id="novaposhta"
+            formControlName="deliveryMethod"
+            value="Нова пошта"
+          />
+          <span class="checkbox__custom"></span>
+          <span class="logo-company">logo</span>
+          <span class="text-company">Нова Пошта</span>
+        </label>
+        <div
+          class="delivery__options-select"
+          [ngClass]="isValid(infoForm, 'department')"
+        >
+          <input
+            #city
+            type="text"
+            class="input-select"
+            (keyup)="onGetDepartment(city.value)"
+            formControlName="novaPoshtaAddress"
+            placeholder="Оберіть відділення"
+            (blur)="onblur()"
+            (focus)="isDepartment = true"
+          />
+          <div class="icon" (click)="isDepartment = !isDepartment">
+            <app-icon
+              [path]="'delivery-icon'"
+              [size]="{ width: '11px', height: '7px' }"
+              [viewBox]="'0 0 11 7'"
+            />
+
+            <app-error-validation
+              [control]="infoForm.get('department')"
+            ></app-error-validation>
+          </div>
+          <div
+            class="department__list"
+            *ngIf="departments?.length && isDepartment"
+          >
+            <ul class="department__list-items">
+              <li
+                class="department__list-item"
+                *ngFor="let department of departments"
+                (click)="chosenDepartment(department)"
+              >
+                {{ department.city }} {{ department.description }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="delivery__options-btn">
+          <span>Заберіть посилку у найближчому відділенні Нової Пошти</span>
+        </div>
+      </div>
+      <div class="delivery__options-checkbox">
+        <label for="uapost">
+          <input
+            type="radio"
+            name="deliveryMethod"
+            id="uapost"
+            formControlName="deliveryMethod"
+            value="Укрпошта"
+          />
+          <span class="checkbox__custom"></span>
+          <span class="logo-company">logo</span>
+          <span class="text-company">УкрПошта</span>
+        </label>
+      </div>
+      <div class="delivery__options-checkbox">
+        <label for="onmyown">
+          <input
+            type="radio"
+            name="deliveryMethod"
+            id="onmyown"
+            formControlName="deliveryMethod"
+            value="Самовивіз"
+          />
+          <span class="checkbox__custom"></span>
+          <span class="logo-company">logo</span>
+          <span class="text-company">Самовивіз</span>
+        </label>
+      </div>
+      <div class="delivery__options-checkbox">
+        <label for="postman">
+          <input
+            type="radio"
+            name="deliveryMethod"
+            id="postman"
+            formControlName="deliveryMethod"
+            value="Кур'єрська доставка"
+          />
+          <span class="checkbox__custom"></span>
+          <span class="logo-company">logo</span>
+          <span class="text-company">Кур’єрська доставка</span>
+        </label>
+        <app-error-validation
+          [control]="infoForm.get('deliveryMethod')"
+        ></app-error-validation>
+      </div>
+    </div>
+  </div>
+</form>

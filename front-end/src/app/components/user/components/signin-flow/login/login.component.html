@@ -1,0 +1,67 @@
+<section class="login">
+  <div class="login__wrap">
+    <div class="login__title">Увійти</div>
+    <form class="login__form" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+      <div class="form__container">
+        <div class="input__wrap" [ngClass]="isValid(signinForm, 'email')">
+          <input
+            class="form__input"
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="E-mail*"
+          />
+          <app-error-validation
+            [control]="signinForm.get('email')"
+          ></app-error-validation>
+        </div>
+
+        <div class="input__wrap" [ngClass]="isValid(signinForm, 'password')">
+          <input
+            #input
+            class="form__input"
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Пароль*"
+          />
+          <span class="icon" (click)="isVisisble(input)">
+            <app-visibility-icon></app-visibility-icon>
+          </span>
+          <app-error-validation
+            [control]="signinForm.get('password')"
+          ></app-error-validation>
+        </div>
+      </div>
+      <div class="form__checkbox">
+        <input type="checkbox" id="pass-save" formControlName="savePass" />
+        <label class="form__checkbox__label" for="pass-save"
+          >Зберегти пароль</label
+        >
+      </div>
+      <div class="form__btn">
+        <button
+          class="btn btn__login diasbled"
+          type="submit"
+          [disabled]="!signinForm.valid"
+        >
+          Увійти
+        </button>
+      </div>
+    </form>
+    <div class="login__section-adittion">
+      <a class="login__link" (click)="recover = !recover">Забули пароль?</a>
+      <a class="login__link" routerLink="/signup">Зареєструватися</a>
+    </div>
+    <p class="or">або</p>
+    <div>
+      <app-google-login></app-google-login>
+    </div>
+  </div>
+  <ng-container *ngIf="recover">
+    <app-recover-pass (recover)="recoverPass($event)"></app-recover-pass>
+  </ng-container>
+  <ng-container *ngIf="isNewPass">
+    <app-new-pass (isNewPass)="newPass($event)"></app-new-pass>
+  </ng-container>
+</section>

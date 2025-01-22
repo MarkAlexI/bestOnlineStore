@@ -1,0 +1,18 @@
+<section class="similar-products wrapper">
+  <h3 class="similar-products__title">Схожі товари</h3>
+  <div
+    *ngIf="products$ | async as products"
+    class="similar-products__container"
+  >
+    <app-product-card
+      *ngFor="let similarProduct of products?.slice(0, 3)"
+      [product]="similarProduct"
+      (click)="onProductClick(similarProduct._id!)"
+    />
+  </div>
+  <a
+    class="similar-products__btn"
+    [routerLink]="['/catalog/menu', product.subcategory]"
+    >Переглянути всі</a
+  >
+</section>

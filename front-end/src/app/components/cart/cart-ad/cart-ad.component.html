@@ -1,0 +1,31 @@
+<div class="adv">
+  <div class="adv__title">Вам може сподобатися:</div>
+  <div class="adv__wrap">
+    <div class="adv__body" *ngFor="let adv of advs">
+      <div class="adv__body-wrap">
+        <img class="adv__img" [src]="adv.baseImage" [alt]="adv.shortDescr" />
+        <div class="like-wrap" (click)="addToFavorite()">
+          <app-icon
+            class="like"
+            [path]="'like'"
+            [size]="{ width: '40px', height: '40px' }"
+            [viewBox]="'0 0 24 24'"
+            [fill]="'none'"
+          ></app-icon>
+          <app-icon
+            class="like-hover"
+            [path]="'like-hover'"
+            [size]="{ width: '40px', height: '40px' }"
+          ></app-icon>
+        </div>
+      </div>
+      <div class="adv__text">
+        <div class="adv__description">
+          {{ adv.name }}
+        </div>
+        <div class="adv__review">Залишити відгук</div>
+        <div class="adv__price">{{ 5500 | transformPrice }}</div>
+      </div>
+    </div>
+  </div>
+</div>

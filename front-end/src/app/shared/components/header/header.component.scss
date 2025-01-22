@@ -1,0 +1,100 @@
+@use "logo-mixin";
+@use "colors";
+@use "fonts";
+
+.header {
+  &__logo {
+    @include logo-mixin.logo;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    width: 1555px;
+  }
+
+  &__search {
+    display: flex;
+    width: 418px;
+    padding: 8px 16px;
+  }
+
+  &__input {
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid colors.$gray;
+  }
+}
+
+.logo__image {
+  // @include logo-mixin.image();
+  background-image: url("../../../../assets/pics/logo.png");
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  width: 1017px;
+
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    width: 719px;
+  }
+
+  &__link {
+    @include fonts.montserrat(20px, 400, normal, 130%);
+
+    position: relative;
+    padding: 5px;
+    text-decoration: none;
+    color: colors.$black;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 1px;
+      background-color: colors.$black;
+      transition: width 0.4s ease-in-out;
+    }
+
+    &:after {
+      top: 0;
+      left: 0;
+    }
+    &:hover::before,
+    &:hover::after,
+    &.active-link::before,
+    &.active-link::after {
+      width: 100%;
+    }
+    &:hover::before,
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__icon_heart {
+    margin: 0 20px;
+  }
+}

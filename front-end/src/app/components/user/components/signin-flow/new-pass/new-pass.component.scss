@@ -1,0 +1,63 @@
+@use "inputs";
+@use "fonts";
+@use "flex";
+@forward "../../../../../shared/components/error-validation/error-validation.component.scss";
+@forward "btn";
+
+.recover__input {
+  @include inputs.input;
+}
+
+.input__wrap {
+  @include inputs.input-wrap;
+  max-width: 570px;
+}
+
+.recover {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+
+  &__form {
+    @include flex.flex-col-ac;
+
+    justify-content: center;
+    padding: 20px;
+    gap: 48px;
+  }
+
+  &__wrap {
+    margin: 10% auto 0 auto;
+    border-radius: 8px;
+    max-width: 670px;
+    padding: 20px;
+    background: #fff;
+
+    p {
+      @include fonts.primary-roboto(18px, 400, normal, 130%);
+      text-align: center;
+    }
+  }
+}
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.icon {
+  cursor: pointer;
+}

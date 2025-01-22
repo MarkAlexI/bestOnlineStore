@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from './components/user/services/signin-flow/auth.guard';
 
 export const APP_ROUTING: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./shared/layout/layout.component').then((m) => m.LayoutComponent),
+      import('./shared/components/layout/layout.component').then(
+        (m) => m.LayoutComponent
+      ),
     children: [
       {
         path: '',
@@ -14,7 +17,7 @@ export const APP_ROUTING: Routes = [
           ),
       },
       {
-        path: '',
+        path: 'catalog',
         loadChildren: () =>
           import('./components/catalog/catalog.routing').then(
             (m) => m.CATALOG_ROUTING
@@ -33,6 +36,7 @@ export const APP_ROUTING: Routes = [
           import('./components/cart/cart.component').then(
             (m) => m.CartComponent
           ),
+        outlet: 'cart',
       },
       {
         path: 'sales',
@@ -42,31 +46,39 @@ export const APP_ROUTING: Routes = [
           ),
       },
       {
+        path: 'user',
+        loadChildren: () =>
+          import('./components/user/user.routing').then((m) => m.USER_ROUTES),
+      },
+      {
         path: 'about',
-        loadComponent: () =>
-          import('./components/about/about.component').then(
-            (m) => m.AboutComponent
+        loadChildren: () =>
+          import('./components/about/about.routing').then(
+            (m) => m.ABOUT_ROUTING
           ),
       },
+
       {
         path: 'login',
         loadComponent: () =>
-          import('./components/signin-flow/login/login.component').then(
-            (m) => m.LoginComponent
-          ),
+          import(
+            './components/user/components/signin-flow/login/login.component'
+          ).then((m) => m.LoginComponent),
+        canActivate: [loginGuard],
       },
       {
         path: 'signup',
         loadComponent: () =>
-          import('./components/signin-flow/signup/signup.component').then(
-            (m) => m.SignupComponent
-          ),
+          import(
+            './components/user/components/signin-flow/signup/signup.component'
+          ).then((m) => m.SignupComponent),
+        canActivate: [loginGuard],
       },
     ],
   },
 
   {
-    path: '',
+    path: 'admin',
     loadChildren: () =>
       import('./admin/admin.routing').then((m) => m.ADMIN_ROUTING),
   },
