@@ -1,7 +1,7 @@
 import Product from '../models/productSchema.js';
 
 const buildProductQuery = (queryParams) => {
-  const query = Product.find();
+  const query = Product.find().populate('reviews');
   if (queryParams.minPrice) {
     query.where('price').gte(parseInt(queryParams.minPrice, 10));
   }

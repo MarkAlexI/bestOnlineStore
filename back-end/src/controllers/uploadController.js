@@ -1,111 +1,101 @@
-import { Storage } from '@google-cloud/storage';
-import multer from 'multer';
 import Product from '../models/productSchema.js';
+import Article from '../models/articleSchema.js';
 import logger from '../utils/logger.js';
 import {
   HTTP_STATUS_CODES,
   MESSAGES
 } from '../utils/constants.js';
 import sendRes from '../utils/handleResponse.js';
+import { FileService } from '../services/fileService.js';
 
-const bucketPath = `${process.env.BUCKET_PATH}`;
-
-const storage = new Storage({
-  projectId: `${process.env.GCLOUD_PROJECT}`,
-  keyFilename: './credentials.json',
-});
-
-const bucket = storage.bucket(`${process.env.GCS_BUCKET}`);
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024,
-  },
-});
-
-const uploadFile = async (req, res) => {
+const uploadFileForEntity = async (req, res, EntityModel, entityName) => {
   try {
     const { file } = req;
-    const fileName = `${Date.now()}_${file['originalname']}`;
-    const fileStream = bucket.file(fileName).createWriteStream();
+    const { entityId } = req.body;
+    const entity = await EntityModel.findById(entityId);
 
-    fileStream.on('error', (error) => {
-      return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, MESSAGES.ERROR_UPLOADING_FILE, error);
-    });
+    if (entity) {
+      const imagePath = await FileService.uploadFile(file);
 
-    fileStream.on('finish', async () => {
-      logger.info('File uploaded to GCS successfully:', fileName);
-
-      const { productId } = req.body;
-      const product = await Product.findById(productId);
-
-      if (product) {
-        const imagePath = bucketPath.concat(fileName);
-
-        if (product.allImages[0] === '' || !product.allImages[0]) {
-          product.allImages[0] = imagePath;
-          product.baseImage = imagePath;
-        } else {
-          product.allImages.push(imagePath);
-        }
-
-        await product.save();
-
-        logger.info('The image successfully added to product.');
-
-        return sendRes(res, HTTP_STATUS_CODES.CREATED, MESSAGES.FILE_SAVED_ON_GCS, imagePath);
+      if (entity.allImages[0] === '' || !entity.allImages[0]) {
+        entity.allImages[0] = imagePath;
+        entity.baseImage = imagePath;
       } else {
-        return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, MESSAGES.PRODUCT_NOT_FOUND);
+        entity.allImages.push(imagePath);
       }
-    });
 
-    fileStream.end(file.buffer);
+      await entity.save();
+
+      logger.info(`The image successfully added to ${entityName}.`);
+
+      return sendRes(res, HTTP_STATUS_CODES.CREATED, MESSAGES.FILE_SAVED_ON_GCS, imagePath);
+    } else {
+      return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, MESSAGES[`${entityName.toUpperCase()}_NOT_FOUND`]);
+    }
   } catch (error) {
     return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, MESSAGES.ERROR_HANDLING_FILE_UPLOAD, error);
   }
 };
 
-const deleteFile = async (req, res) => {
+const deleteFileForEntity = async (req, res, EntityModel, entityName) => {
   try {
-    const { productId, imageIndex } = req.body;
-    const product = await Product.findById(productId);
+    const { entityId, imageIndex } = req.body;
+    const entity = await EntityModel.findById(entityId);
 
-    if (product) {
-      const images = product.allImages;
+    if (entity) {
+      const images = entity.allImages;
 
       if (imageIndex >= 0 && imageIndex < images.length) {
         const imagePath = images[imageIndex];
+        const fileName = imagePath.slice(imagePath.lastIndexOf('/') + 1);
 
-        await bucket.file(imagePath).delete();
+        await FileService.deleteFile(fileName);
 
-        product.allImages.splice(imageIndex, 1);
+        entity.allImages.splice(imageIndex, 1);
 
-        if (product.baseImage === imagePath) {
-          product.baseImage = '';
-          if (product.allImages.length > 0) {
-            product.baseImage = product.allImages[0];
+        if (entity.baseImage === imagePath) {
+          entity.baseImage = '';
+          if (entity.allImages.length > 0) {
+            entity.baseImage = entity.allImages[0];
           }
         }
 
-        await product.save();
+        await entity.save();
 
-        logger.info('Image deleted from product and Google Cloud Storage:', imagePath);
+        logger.info(`Image deleted from ${entityName} and Google Cloud Storage:`, imagePath);
 
         return sendRes(res, HTTP_STATUS_CODES.OK, MESSAGES.IMAGE_DELETED_SUCCESSFULLY);
       } else {
         return sendRes(res, HTTP_STATUS_CODES.BAD_REQUEST, MESSAGES.INVALID_IMAGE_INDEX);
       }
     } else {
-      return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, MESSAGES.PRODUCT_NOT_FOUND);
+      return sendRes(res, HTTP_STATUS_CODES.NOT_FOUND, MESSAGES[`${entityName.toUpperCase()}_NOT_FOUND`]);
     }
   } catch (error) {
     return sendRes(res, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, MESSAGES.ERROR_DELETING_IMAGE, error);
   }
 };
 
+const saveProductImage = async (req, res) => {
+  return uploadFileForEntity(req, res, Product, 'product');
+};
+
+const saveArticleImage = async (req, res) => {
+  return uploadFileForEntity(req, res, Article, 'article');
+};
+
+const deleteProductImage = async (req, res) => {
+  return deleteFileForEntity(req, res, Product, 'product');
+};
+
+const deleteArticleImage = async (req, res) => {
+  return deleteFileForEntity(req, res, Article, 'article');
+};
+
+
 export {
-  upload,
-  uploadFile,
-  deleteFile
+  saveProductImage,
+  saveArticleImage,
+  deleteProductImage,
+  deleteArticleImage
 };

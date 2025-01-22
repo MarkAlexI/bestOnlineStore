@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import deleteOldAnonymous from './utils/deleteOldAnonymous.js';
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ const connectToDatabase = (retryCount = 0) => {
 };
 
 connectToDatabase();
+
+await deleteOldAnonymous();
 
 const dbConnection = mongoose.connection;
 

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Review from './reviewSchema.js';
 
 const characteristicsSchema = new mongoose.Schema({
   _id: false,
@@ -24,13 +25,11 @@ const productSchema = new mongoose.Schema({
   subcategory: { type: String, default: '' },
   instock: { type: Boolean, default: true },
   countInStock: { type: Number, default: 0 },
-  raiting: { type: Number, default: 3 },
+  rating: { type: Number, default: 3 },
   characteristics: [characteristicsSchema],
   numReviews: { type: Number, default: 0 },
-  reviews: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Review'
-  }],
+  viewed: { type: Number, default: 0 },
+  reviews: [Review.schema],
   new: { type: Boolean, default: true }
 }, { timestamps: true }
 );

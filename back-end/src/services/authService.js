@@ -18,7 +18,7 @@ class AuthService {
 
         return {
           status: HTTP_STATUS_CODES.OK,
-          message: 'User signed in successfully.',
+          message: MESSAGES.USER_SIGNED_IN,
           data: {
             _id: user._id,
             firstName: user.firstName,

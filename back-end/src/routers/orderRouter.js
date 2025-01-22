@@ -8,8 +8,8 @@ import {
   changeOrder,
   deleteOrder
 } from '../controllers/orderController.js';
-import isAuth from '../utils/auth.js';
-import  isAdmin from '../utils/admin.js';
+import isAuth from '../middlewares/auth.js';
+import  isAdmin from '../middlewares/admin.js';
 
 const orderRouter = express.Router();
 

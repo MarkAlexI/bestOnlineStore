@@ -4,7 +4,7 @@ import logger from './utils/logger.js';
 import path from 'path';
 import sendRes from './utils/handleResponse.js';
 import dbConnection from './db.js';
-import configureApp from './serverSetup.js';
+import configureApp from './config/serverSetup.js';
 import userRouter from './routers/userRouter.js';
 import productRouter from './routers/productRouter.js';
 import cartRouter from './routers/cartRouter.js';
@@ -13,6 +13,12 @@ import uploadRouter from './routers/uploadRouter.js';
 import reviewRouter from './routers/reviewRouter.js';
 import wishListRouter from './routers/wishListRouter.js';
 import dataRouter from './routers/dataRouter.js';
+import blogRouter from './routers/blogRouter.js';
+import { createServer } from 'http';
+import { WebSocketServer } from 'ws';
+import chatHandler from './websocketHandler.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from './config/swagger.js';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirName = path.dirname(__fileName);
@@ -31,8 +37,18 @@ for (let i = 0; i < args.length; i++) {
 logger.info('mode: ' + mode);
 if (mode === 'production') pathToIndex = '../../front-end/dist/front-end/';
 
+const host = process.env.HOST || 'http://localhost';
 const port = process.env.PORT || 30000;
 const app = express();
+
+const server = createServer(app);
+
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', (ws, req) => {
+  logger.info('New WebSocket connection established.');
+  chatHandler(ws, req);
+});
 
 configureApp(app);
 
@@ -44,7 +60,9 @@ app.use('/api/upload', uploadRouter);
 app.use('/api/review', reviewRouter);
 app.use('/api/wishlist', wishListRouter);
 app.use('/api/data', dataRouter);
+app.use('/api/blog', blogRouter);
 app.get('/ip', (req, res) => res.send(req.ip));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 const staticPath = path.join(__dirName, pathToIndex);
 
@@ -54,17 +72,19 @@ app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(staticPath, 'favicon.ico'));
 });
 
-app.get('*', (req, res) => {
-  logger.info(JSON.stringify(req.headers));
-  res.sendFile(path.join(staticPath, 'index.html'));
+app.use((req, res, next) => {
+  if (!req.route) {
+    return sendRes(res, 400, 'Wrong route!', null);
+  }
+  next();
 });
 
 app.use((error, req, res, next) => {
-  sendRes(res, 'Something went wrong!', error);
+  return sendRes(res, 500, 'Something went wrong!', error);
 });
 
-const server = app.listen(port, () => {
-  logger.info(`Server at http://localhost:${port}`);
+server.listen(port, () => {
+  logger.info(`Server at ${host}:${port}`);
 });
 
 server.on('close', () => {

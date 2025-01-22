@@ -5,6 +5,8 @@ import {
   MESSAGES
 } from '../utils/constants.js';
 import ProductService from '../services/productService.js';
+import logger from '../utils/logger.js';
+import addLinks from '../utils/addLinks.js';
 
 const getAllProducts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -12,6 +14,15 @@ const getAllProducts = async (req, res) => {
   const skip = (page - 1) * perPage;
 
   const result = await ProductService.getAllProducts(req.query, skip, perPage);
+
+  const url = req.protocol +
+    '://' +
+    req.hostname +
+    req.originalUrl.split('?').shift() +
+    `?perPage=${perPage}&page=`;
+
+  addLinks(res, page, perPage, result.data.totalProducts, url);
+
   return sendRes(res, result.status, result.message, result.data);
 };
 
@@ -41,6 +52,13 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const productId = req.params.id;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {logger.error(errors.array());
+    return sendRes(res, HTTP_STATUS_CODES.BAD_REQUEST, MESSAGES.VALIDATION_ERROR, errors.array());
+  }
+
   const result = await ProductService.updateProduct(productId, req.body);
   return sendRes(res, result.status, result.message, result.data);
 };

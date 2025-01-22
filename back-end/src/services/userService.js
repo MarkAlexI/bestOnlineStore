@@ -1,6 +1,6 @@
 import User from '../models/userSchema.js';
 import Order from '../models/orderSchema.js';
-import Review from '../models/reviewSchema.js';
+import Product from '../models/productSchema.js';
 import ShippingAddress from '../models/shippingAddressSchema.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TOKEN_DURATIONS
 } from '../utils/constants.js';
-import userNameRegex from '../utils/userNameRegex.js';
+import userNameRegex from '../validation/userNameRegex.js';
 
 class UserService {
   static async getAllUsers() {
@@ -196,16 +196,24 @@ class UserService {
         .populate('wishList')
         .select('-password -resetPasswordToken -resetPasswordExpires');
 
-      const orders = await Order.find({ user: userId });
-      const reviews = await Review.find({ user: userId });
-
-      const userData = {
-        user: user,
-        orders: orders,
-        reviews: reviews
-      };
-
       if (user) {
+        const reviewIds = user.reviews;
+
+        const productsWithReviews = await Product.find({ 'reviews._id': { $in: reviewIds } });
+
+        const reviews = productsWithReviews.reduce((acc, product) => {
+          const matchingReviews = product.reviews.filter(review => reviewIds.includes(review._id));
+          return acc.concat(matchingReviews);
+        }, []);
+        const updatedUser = { ...user._doc, reviews };
+
+        const orders = await Order.find({ user: userId });
+
+        const userData = {
+          user: updatedUser,
+          orders
+        };
+
         return {
           status: HTTP_STATUS_CODES.OK,
           message: MESSAGES.USER_WAS_FOUND,
@@ -363,10 +371,16 @@ class UserService {
 
       const updatedUser = await user.save();
 
+      const populatedUser = await User.findById(updatedUser._id)
+        .select('-password')
+        .populate('shippingAddress');
+
       return {
         status: HTTP_STATUS_CODES.OK,
         message: MESSAGES.USER_WAS_UPDATED,
-        data: updatedUser,
+        data: {
+          user: populatedUser,
+        },
       };
     } catch (error) {
       return {
@@ -378,7 +392,7 @@ class UserService {
   }
 
   static isAdmin(user) {
-    return user.isAdmin === true;
+    return user.email === process.env.ADMIN_EMAIL;
   }
 }
 

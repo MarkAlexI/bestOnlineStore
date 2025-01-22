@@ -3,8 +3,8 @@ import {
   fetchAndSendData,
   getPopularProducts
 } from '../controllers/dataController.js';
-import isAuth from '../utils/auth.js';
-import isAdmin from '../utils/admin.js';
+import isAuth from '../middlewares/auth.js';
+import isAdmin from '../middlewares/admin.js';
 
 const dataRouter = express.Router();
 

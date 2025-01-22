@@ -1,6 +1,6 @@
 import express from 'express';
-import isAuth from '../utils/auth.js';
-import isAdmin from '../utils/admin.js';
+import isAuth from '../middlewares/auth.js';
+import isAdmin from '../middlewares/admin.js';
 import validateUserData from '../validation/userValidation.js';
 import {
   getAllUsers,
@@ -18,8 +18,7 @@ import {
 
 const userRouter = express.Router();
 
-userRouter.get('/all', getAllUsers);
-userRouter.post('/regtest', registerUser);
+userRouter.get('/', isAuth, isAdmin, getAllUsers);
 userRouter.post('/register', validateUserData, registerUser);
 userRouter.get('/reganonymous', registerAnonymous);
 userRouter.post('/google', registerUserByGoogle);

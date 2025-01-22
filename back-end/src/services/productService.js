@@ -18,7 +18,7 @@ class ProductService {
 
       return {
         status: HTTP_STATUS_CODES.OK,
-        message: 'All products in payload.',
+        message: MESSAGES.ALL_PRODUCTS_IN_PAYLOAD,
         data: { products, totalProducts },
       };
     } catch (error) {
@@ -114,11 +114,25 @@ class ProductService {
 
   static async updateProduct(productId, updatedData) {
     try {
-      const refreshedProduct = await Product.findByIdAndUpdate(productId, updatedData, { new: true });
+      let updateObject = { ...updatedData };
 
-      if (refreshedProduct) {
-        refreshedProduct.markModified('characteristics');
-        const updatedProduct = await refreshedProduct.save();
+      if (updatedData['viewed'] !== undefined) {
+        delete updateObject.viewed;
+        updateObject.$inc = { viewed: 1 };
+      }
+
+      let updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        updateObject,
+        { new: true }
+      );
+
+      if (updatedProduct) {
+        if (updatedData['characteristics'] !== undefined) {
+          updatedProduct.markModified('characteristics');
+        }
+
+        updatedProduct = await updatedProduct.save();
 
         return {
           status: HTTP_STATUS_CODES.OK,
