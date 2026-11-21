@@ -8,9 +8,9 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "start:dev": "node src/server.js --mode develop",
-    "start": "node dist/index.js --mode production",
-    "build": "node build.js",
+    "start:dev": "node init && node src/server.js --mode develop",
+    "start": "node init && node dist/index.js --mode production",
+    "build": "node init && node build.js",
     "lint": "npx eslint --fix",
     "prepare": "cd .. && husky install back-end/.husky",
     "test": "echo 'Hello from test.' && mocha --config ./.mocharc.yml ./tests/*.js"
